@@ -1,0 +1,43 @@
+{
+    "name": "devop-core/http",
+    "description": "Http Message Service",
+    "keywords": ["php", "http", "request", "psr7"],
+    "homepage": "https://devop-studio.com",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "DevOp Studio",
+            "email": "core@devop-studio.com",
+            "homepage": "https://devop-studio.com"
+        },
+        {
+            "name": "Zlatin Hristov",
+            "email": "about@z-latko.info",
+            "homepage": "https://z-latko.info",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.4.0",
+        "ext-fileinfo": "*",
+        "psr/http-message": "~1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.*"
+    },
+    "provide": {
+        "psr/http-message-implementation": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "DevOp\\Core\\Http\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DevOp\\Core\\Http\\Test\\": "tests"
+        }
+    }
+}
