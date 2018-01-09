@@ -8,7 +8,7 @@ class Request implements RequestInterface
 
     use MessageTrait;
     use RequestTrait;
-    
+
     public function __construct($method, $uri, array $headers = [], $body = null, $version = '1.1')
     {
         $this->method = $method;

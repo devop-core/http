@@ -42,6 +42,19 @@ class ServerRequest extends Request implements ServerRequestInterface
 
     public static function createFromGlobals()
     {
+        
+        $method = 'GET';
+        if (isset($_SERVER['REQUEST_METHOD'])) {
+            $method = $_SERVER['REQUEST_METHOD'];
+        }
+        
+        $headers = [];
+        if (function_exists('getallheaders')) {
+            $headers = getallheaders();
+        }
+        
+        
+        
         $method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
         $headers = function_exists('getallheaders') ? getallheaders() : [];
         $uri = self::getUriFromGlobals();
