@@ -40,33 +40,39 @@ class ServerRequest extends Request implements ServerRequestInterface
      */
     private $uploadedFiles = [];
 
+    /**
+     * 
+     * @return ServerRequest
+     */
     public static function createFromGlobals()
     {
-        
+
+        $uri = Uri::createFromGlobals();
+
         $method = 'GET';
         if (isset($_SERVER['REQUEST_METHOD'])) {
             $method = $_SERVER['REQUEST_METHOD'];
         }
-        
+
         $headers = [];
         if (function_exists('getallheaders')) {
             $headers = getallheaders();
         }
-        
-        
-        
-        $method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
-        $headers = function_exists('getallheaders') ? getallheaders() : [];
-        $uri = self::getUriFromGlobals();
-        $body = new LazyOpenStream('php://input', 'r+');
-        $protocol = isset($_SERVER['SERVER_PROTOCOL']) ? str_replace('HTTP/', '', $_SERVER['SERVER_PROTOCOL']) : '1.1';
-        $serverRequest = new ServerRequest($method, $uri, $headers, $body, $protocol, $_SERVER);
-        
+
+        $body = new Stream('php://input');
+
+        $protocol = '1.1';
+        if (isset($_SERVER['SERVER_PROTOCOL'])) {
+            $protocol = str_replace('HTTP/', '');
+        }
+
+        $serverRequest = new ServerRequest($method, $uri, $headers, $body, $protocol);
+
         return $serverRequest
-                ->withCookieParams($_COOKIE)
                 ->withQueryParams($_GET)
                 ->withParsedBody($_POST)
-                ->withUploadedFiles(self::normalizeFiles($_FILES));
+                ->withCookieParams($_COOKIE)
+                ->withUploadedFiles(UploadedFile::createFromGlobal());
     }
 
     /**

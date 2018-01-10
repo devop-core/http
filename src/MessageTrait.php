@@ -1,6 +1,8 @@
 <?php
 namespace DevOp\Core\Http;
 
+use Psr\Http\Message\StreamInterface;
+
 trait MessageTrait
 {
 

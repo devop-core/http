@@ -65,6 +65,25 @@ class UploadedFile implements UploadedFileInterface
     }
 
     /**
+     * @return \DevOp\Core\Http\UploadedFile
+     * @throws \InvalidArgumentException
+     */
+    public static function createFromGlobal()
+    {
+        $normalize = [];
+        foreach ($_FILES AS $key => $value) {
+            if ($value instanceof UploadedFileInterface) {
+                $normalize[$key] = $value;
+            } else if (is_array($value) && isset($value['tmp_name'])) {
+                $normalize[$key] = new UploadedFile($value['tmp_name'], $value['size'], $value['error'], $value['name'], $value['type']);
+            } else {
+                throw new \InvalidArgumentException('Invalid value in files specification');
+            }
+        }
+        return $normalize;
+    }
+
+    /**
      * @return string
      */
     public function getClientFilename()
@@ -110,11 +129,11 @@ class UploadedFile implements UploadedFileInterface
      */
     public function moveTo($targetPath)
     {
-        
+
         if (!is_dir($targetPath)) {
             throw new \RuntimeException('Invalid targetPath specified.');
         }
-        
+
         if ($this->file) {
             $upload = move_uploaded_file($this->file, $targetPath);
         } else if ($this->stream) {
@@ -122,7 +141,7 @@ class UploadedFile implements UploadedFileInterface
         } else {
             throw new \RuntimeException('Invalid uploaded file.');
         }
-        
+
         if (!$upload) {
             throw new \RuntimeException('Erro while uploading file.');
         }
