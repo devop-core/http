@@ -25,20 +25,9 @@ class Request implements RequestInterface
     {
 
         $this->method = $method;
-        $this->protocolVersion = $version;
+        $this->uri = new Uri($uri);
         $this->headers = $headers;
-
-        if (!$uri instanceof UriInterface) {
-            /* @var $uri UriInterface */
-            $uri = Uri::createFromGlobals();
-        }
-
-        if (!$body instanceof StreamInterface) {
-            /* @var $body StreamInterface */
-            $body = new Stream($body);
-        }
-        
-        $this->uri = $uri;
-        $this->body = $body;
+        $this->body = new Stream($body);
+        $this->protocolVersion = $version;
     }
 }

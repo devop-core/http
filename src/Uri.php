@@ -104,7 +104,7 @@ class Uri implements UriInterface
             if (isset($components['query'])) {
                 $this->query = $components['query'];
             }
-            if (isset($components['path'])) {
+            if (isset($components['fragment'])) {
                 $this->fragment = $components['fragment'];
             }
             if (isset($components['user'])) {
