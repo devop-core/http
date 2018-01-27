@@ -54,20 +54,20 @@ class Uri implements UriInterface
      */
     public static function createFromGlobals()
     {
-        
+
         $uri = new Uri();
-        
+
         $scheme = 'http';
         if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
             $scheme .= 's';
         }
-        
+
         $uri->withScheme($scheme);
-        
+
         if (isset($_SERVER['REMOTE_PORT']) && (!isset(self::$schemes['http']) && !isset(self::$schemes['https']))) {
             $uri->withPort($_SERVER['REMOTE_PORT']);
         }
-        
+
         if (isset($_SERVER['SERVER_NAME'])) {
             $host = $_SERVER['SERVER_NAME'];
         } else if (isset($_SERVER['SERVER_ADDR'])) {
@@ -75,41 +75,72 @@ class Uri implements UriInterface
         } else {
             $host = '127.0.0.1';
         }
-        
+
         $uri->withHost($host);
-        
+
         if (isset($_SERVER['QUERY_STRING'])) {
             $uri->withQuery(ltrim($_SERVER['QUERY_STRING'], '?'));
         }
-        
+
         return $uri;
     }
-    
+
+    public function __construct($uri = '')
+    {
+        if ($uri !== '') {
+            $components = parse_url($uri);
+            if (isset($components['scheme'])) {
+                $this->scheme = $components['scheme'];
+            }
+            if (isset($components['host'])) {
+                $this->host = $components['host'];
+            }
+            if (isset($components['port']) && !in_array($components['port'], [self::$schemes['http'], self::$schemes['https']])) {
+                $this->port = $components['port'];
+            }
+            if (isset($components['path'])) {
+                $this->path = $components['path'];
+            }
+            if (isset($components['query'])) {
+                $this->query = $components['query'];
+            }
+            if (isset($components['path'])) {
+                $this->fragment = $components['fragment'];
+            }
+            if (isset($components['user'])) {
+                $this->userInfo = $components['user'];
+            }
+            if (isset($components['pass'])) {
+                $this->userInfo .= ':' . $components['pass'];
+            }
+        }
+    }
+
     /**
      * @return string
      */
     public function __toString()
     {
         $uri = $this->scheme;
-        
+
         if ($this->userInfo !== null) {
             $uri .= "//{$this->userInfo}";
         }
-        
+
         if ($this->port !== null && !in_array($this->port, [self::$schemes['http'], self::$schemes['https']])) {
             $uri .= ":{$this->port}";
         }
-        
+
         $uri .= $this->path;
-        
+
         if ($this->query !== null) {
             $uri .= "?{$this->query}";
         }
-        
+
         if ($this->fragment !== null) {
             $uri .= "#{$this->fragment}";
         }
-        
+
         return $uri;
     }
 
