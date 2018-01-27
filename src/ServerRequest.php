@@ -2,6 +2,8 @@
 namespace DevOp\Core\Http;
 
 use DevOp\Core\Http\Request;
+use Psr\Http\Message\UriInterface;
+use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class ServerRequest extends Request implements ServerRequestInterface
@@ -41,7 +43,6 @@ class ServerRequest extends Request implements ServerRequestInterface
     private $uploadedFiles = [];
 
     /**
-     * 
      * @return ServerRequest
      */
     public static function createFromGlobals()
@@ -59,22 +60,37 @@ class ServerRequest extends Request implements ServerRequestInterface
             $headers = getallheaders();
         }
 
-        $body = new Stream('php://input');
+        $body = new Stream('php://memory');
 
         $protocol = '1.1';
         if (isset($_SERVER['SERVER_PROTOCOL'])) {
-            $protocol = str_replace('HTTP/', '');
+            $protocol = str_replace('HTTP/', '', $_SERVER['SERVER_PROTOCOL']);
         }
 
-        $serverRequest = new ServerRequest($method, $uri, $headers, $body, $protocol);
+        $serverRequest = new ServerRequest($method, $uri, $headers, $body, $protocol, $_SERVER);
 
         return $serverRequest
-                ->withQueryParams($_GET)
                 ->withParsedBody($_POST)
+                ->withQueryParams($_GET)
                 ->withCookieParams($_COOKIE)
                 ->withUploadedFiles(UploadedFile::createFromGlobal());
     }
 
+    /**
+     * 
+     * @param string $method
+     * @param UriInterface|string $uri
+     * @param array $headers
+     * @param StreamInterface|null $body
+     * @param string|null $version
+     * @param array $serverParams
+     */
+    public function __construct($method, $uri, array $headers = array(), $body = 'php://memory', $version = '1.1', $serverParams = [])
+    {
+        parent::__construct($method, $uri, $headers, $body, $version);
+        $this->serverParams = $serverParams;
+    }
+    
     /**
      * @return string
      */

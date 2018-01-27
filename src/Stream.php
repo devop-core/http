@@ -8,28 +8,45 @@ class Stream implements StreamInterface
 
     /**
      * @var array
+     * @link http://php.net/manual/function.fopen.php
      */
     protected $modes = [
-        'readable' => ['r', 'r+', 'w+', 'a+', 'x+', 'c+'],
-        'writable' => ['r+', 'w', 'w+', 'a', 'a+', 'x', 'x+', 'c', 'c+'],
+        'readable' => [
+            'r' => true, 'w+' => true, 'r+' => true, 'x+' => true, 'c+' => true,
+            'rb' => true, 'w+b' => true, 'r+b' => true, 'x+b' => true,
+            'c+b' => true, 'rt' => true, 'w+t' => true, 'r+t' => true,
+            'x+t' => true, 'c+t' => true, 'a+' => true
+        ],
+        'writable' => [
+            'w' => true, 'w+' => true, 'rw' => true, 'r+' => true, 'x+' => true,
+            'c+' => true, 'wb' => true, 'w+b' => true, 'r+b' => true,
+            'x+b' => true, 'c+b' => true, 'w+t' => true, 'r+t' => true,
+            'x+t' => true, 'c+t' => true, 'a' => true, 'a+' => true
+        ],
     ];
 
     /**
      * @var resource
      */
-    private $handle;
+    private $stream;
 
     /**
-     * @param resource $handle
+     * @param resource|string $handle
+     * @param string|null $mode
      * @throws \InvalidArgumentException
      */
-    public function __construct($handle)
+    public function __construct($handle, $mode = 'r')
     {
-        if (!is_resource($this->handle) || get_resource_type($this->handle) !== 'stream') {
-            throw new \InvalidArgumentException('Must be a stream');
+
+        if (is_string($handle)) {
+            $handle = fopen($handle, $mode);
         }
 
-        $this->handle = $handle;
+        if (!is_resource($handle)) {
+            throw new \InvalidArgumentException('Argument must be a valid stream.');
+        }
+
+        $this->stream = $handle;
     }
 
     /**
@@ -37,15 +54,14 @@ class Stream implements StreamInterface
      */
     public function __toString()
     {
-        if (!$this->isReadable()) {
+        try {
+            if ($this->isSeekable()) {
+                $this->rewind();
+            }
+            return $this->getContents();
+        } catch (\Exception $e) {
             return '';
         }
-
-        if ($this->isSeekable()) {
-            $this->rewind();
-        }
-
-        return stream_get_contents($this->handle);
     }
 
     /**
@@ -53,7 +69,7 @@ class Stream implements StreamInterface
      */
     public function close()
     {
-        if (!$this->handle) {
+        if (!$this->stream) {
             return;
         }
 
@@ -66,8 +82,8 @@ class Stream implements StreamInterface
      */
     public function detach()
     {
-        $handle = $this->handle;
-        $this->handle = null;
+        $handle = $this->stream;
+        $this->stream = null;
 
         return $handle;
     }
@@ -77,11 +93,11 @@ class Stream implements StreamInterface
      */
     public function eof()
     {
-        if (!$this->handle) {
+        if (!$this->stream) {
             return true;
         }
 
-        return feof($this->handle);
+        return feof($this->stream);
     }
 
     /**
@@ -90,7 +106,7 @@ class Stream implements StreamInterface
      */
     public function getContents()
     {
-        if (!$this->handle) {
+        if (!$this->stream) {
             throw new \RuntimeException('Empty stream');
         }
 
@@ -98,7 +114,7 @@ class Stream implements StreamInterface
             throw new \RuntimeException('Unable to read stream');
         }
 
-        return stream_get_contents($this->handle);
+        return (string) stream_get_contents($this->stream);
     }
 
     /**
@@ -107,7 +123,7 @@ class Stream implements StreamInterface
      */
     public function getMetadata($key = null)
     {
-        $metadata = stream_get_meta_data($this->handle);
+        $metadata = stream_get_meta_data($this->stream);
 
         if (null === $key) {
             return $metadata;
@@ -125,7 +141,7 @@ class Stream implements StreamInterface
      */
     public function getSize()
     {
-        $fstats = fstat($this->handle);
+        $fstats = fstat($this->stream);
         if (isset($fstats['size'])) {
             return $fstats['size'];
         }
@@ -138,12 +154,12 @@ class Stream implements StreamInterface
      */
     public function isReadable()
     {
-        if (!$this->handle) {
+        if (!$this->stream) {
             return false;
         }
 
         $mode = $this->getMetadata('mode');
-        return isset($this->modes['read'][$mode]);
+        return isset($this->modes['readable'][$mode]);
     }
 
     /**
@@ -151,7 +167,7 @@ class Stream implements StreamInterface
      */
     public function isSeekable()
     {
-        if (!$this->handle) {
+        if (!$this->stream) {
             return false;
         }
 
@@ -167,12 +183,12 @@ class Stream implements StreamInterface
      */
     public function isWritable()
     {
-        if (!$this->handle) {
+        if (!$this->stream) {
             return false;
         }
 
         $mode = $this->getMetadata('mode');
-        return isset($this->modes['write'][$mode]);
+        return isset($this->modes['writable'][$mode]);
     }
 
     /**
@@ -186,7 +202,7 @@ class Stream implements StreamInterface
             throw new \RuntimeException('Stream is not readable');
         }
 
-        return fread($this->handle, $length);
+        return fread($this->stream, $length);
     }
 
     /**
@@ -212,7 +228,7 @@ class Stream implements StreamInterface
             throw new \RuntimeException('Stream is not seekable');
         }
 
-        return fseek($this->handle, $offset, $whence);
+        return fseek($this->stream, $offset, $whence);
     }
 
     /**
@@ -221,11 +237,11 @@ class Stream implements StreamInterface
      */
     public function tell()
     {
-        if (!$this->handle) {
+        if (!$this->stream) {
             throw new \RuntimeException('Invalid stream handle');
         }
 
-        return ftell($this->handle);
+        return ftell($this->stream);
     }
 
     /**
@@ -239,6 +255,6 @@ class Stream implements StreamInterface
             throw new \RuntimeException('Stream is not writable');
         }
 
-        return fwrite($this->handle, $string);
+        return fwrite($this->stream, $string);
     }
 }

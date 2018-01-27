@@ -70,7 +70,7 @@ class Uri implements UriInterface
         
         if (isset($_SERVER['SERVER_NAME'])) {
             $host = $_SERVER['SERVER_NAME'];
-        } else if ($_SERVER['SERVER_ADDR']) {
+        } else if (isset($_SERVER['SERVER_ADDR'])) {
             $host = $_SERVER['SERVER_ADDR'];
         } else {
             $host = '127.0.0.1';

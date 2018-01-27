@@ -1,7 +1,27 @@
 <?php
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+namespace DevOp\Core\Http\Test;
 
+class UploadedFileTest extends \PHPUnit_Framework_TestCase
+{
+
+    /**
+     * @var \DevOp\Core\Http\UploadedFile
+     */
+    private $uploadedFile;
+
+    public function setUp()
+    {
+        $this->uploadedFile = new \DevOp\Core\Http\UploadedFile(new \DevOp\Core\Http\Stream('php://temp'), 3);
+    }
+    
+    public function testConstructThrowException()
+    {
+        $this->setExpectedException('\RuntimeException');
+        new \DevOp\Core\Http\UploadedFile(null, null);
+    }
+    
+    public function testGetUploadedFileSize()
+    {
+        return $this->assertEquals(3, $this->uploadedFile->getSize());
+    }
+}

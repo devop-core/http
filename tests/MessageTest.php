@@ -11,20 +11,14 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->message = new \DevOp\Core\Http\Request('GET', '');
+        $this->message = new \DevOp\Core\Http\Message();
     }
 
     public function testGetBody()
     {
-        $this->assertEquals('', $this->message->getBody());
+        $this->assertNull($this->message->getBody());
     }
-
-    public function testWithBody()
-    {
-        $clone = $this->message->withBody(new \DevOp\Core\Http\Stream(''));
-        $this->assertEquals('', $clone->getBody());
-    }
-
+    
     public function testGetProtocolVersion()
     {
         $this->assertEquals('1.1', $this->message->getProtocolVersion());
@@ -32,7 +26,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
     public function testWithProtocolVersion()
     {
-        $clone = $this->message->withProtocolVersion('1.0');
-        $this->assertEquals('1.0', $clone->getProtocolVersion());
+        $clone = $this->message->withProtocolVersion('2.0');
+        $this->assertEquals('2.0', $clone->getProtocolVersion());
     }
 }

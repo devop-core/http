@@ -31,53 +31,12 @@ trait MessageTrait
      */
     private $stream;
 
+    /**
+     * @return Stream
+     */
     public function getBody()
     {
         return $this->body;
-    }
-
-    public function getHeader($name)
-    {
-        if ($this->hasHeader($name)) {
-            return [$this->headers[$this->headersName[strtolower($name)]]];
-        }
-        return [];
-    }
-
-    public function getHeaderLine($name)
-    {
-        return implode(', ', $this->getHeader($name));
-    }
-
-    public function getHeaders()
-    {
-        return $this->headers;
-    }
-
-    public function getProtocolVersion()
-    {
-        return $this->protocolVersion;
-    }
-
-    public function hasHeader($name)
-    {
-        return isset($this->headersName[strtolower($name)]);
-    }
-
-    public function withAddedHeader($name, $value)
-    {
-        $clone = new $this;
-
-        $normalize = strtolower($name);
-
-        if ($clone->hasHeader($name)) {
-            $clone->headers[$normalize] = array_merge($this->headers, is_array($value) ? $value : [$value]);
-        } else {
-            $clone->headersName[$normalize] = $name;
-            $clone->headers[$normalize] = is_array($value) ? $value : [$value];
-        }
-
-        return $clone;
     }
 
     /**
@@ -94,6 +53,33 @@ trait MessageTrait
         $clone->stream = $body;
 
         return $clone;
+    }
+
+    public function hasHeader($name)
+    {
+        return isset($this->headersName[strtolower($name)]);
+    }
+
+    /**
+     * @param string $name
+     * @return mixed
+     */
+    public function getHeader($name)
+    {
+        if ($this->hasHeader($name)) {
+            return [$this->headers[$this->headersName[strtolower($name)]]];
+        }
+        return [];
+    }
+
+    public function getHeaderLine($name)
+    {
+        return implode(', ', $this->getHeader($name));
+    }
+
+    public function getHeaders()
+    {
+        return $this->headers;
     }
 
     /**
@@ -118,18 +104,18 @@ trait MessageTrait
         return $clone;
     }
 
-    /**
-     * @param string $version
-     * @return \DevOp\Core\Http\Message|$this
-     */
-    public function withProtocolVersion($version)
+    public function withAddedHeader($name, $value)
     {
-        if ($version === $this->protocolVersion) {
-            return $this;
-        }
+        $clone = new $this;
 
-        $clone = clone $this;
-        $clone->protocolVersion = $version;
+        $normalize = strtolower($name);
+
+        if ($clone->hasHeader($name)) {
+            $clone->headers[$normalize] = array_merge($this->headers, is_array($value) ? $value : [$value]);
+        } else {
+            $clone->headersName[$normalize] = $name;
+            $clone->headers[$normalize] = is_array($value) ? $value : [$value];
+        }
 
         return $clone;
     }
@@ -148,6 +134,27 @@ trait MessageTrait
             unset($clone->headers[$this->headersName[$normalize]]);
             unset($clone->headersName[$normalize]);
         }
+
+        return $clone;
+    }
+
+    public function getProtocolVersion()
+    {
+        return $this->protocolVersion;
+    }
+
+    /**
+     * @param string $version
+     * @return \DevOp\Core\Http\Message|$this
+     */
+    public function withProtocolVersion($version)
+    {
+        if ($version === $this->protocolVersion) {
+            return $this;
+        }
+
+        $clone = clone $this;
+        $clone->protocolVersion = $version;
 
         return $clone;
     }

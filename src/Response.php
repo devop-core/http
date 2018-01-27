@@ -9,7 +9,7 @@ class Response implements ResponseInterface
     use MessageTrait;
 
     /**
-     * https://gist.github.com/Stoffo/53e093450aed067a8fa8
+     * @link https://gist.github.com/Stoffo/53e093450aed067a8fa8
      * */
     private static $phrases = array(
         100 => 'Continue',
@@ -71,12 +71,6 @@ class Response implements ResponseInterface
 
     /**
      *
-     * @var string
-     */
-    private $reasonPhrase;
-
-    /**
-     *
      * @var int
      */
     private $statusCode;
@@ -85,10 +79,7 @@ class Response implements ResponseInterface
      *
      * @var string
      */
-    public function getReasonPhrase()
-    {
-        return $this->reasonPhrase;
-    }
+    private $reasonPhrase;
 
     /**
      *
@@ -112,13 +103,22 @@ class Response implements ResponseInterface
 
         $clone = clone $this;
         $clone->statusCode = $code;
-        
+
         if (empty($reasonPhrase) && isset(self::$phrases[$code])) {
             $reasonPhrase = self::$phrases[$code];
         }
-        
+
         $clone->reasonPhrase = $reasonPhrase;
 
         return $clone;
+    }
+
+    /**
+     *
+     * @var string
+     */
+    public function getReasonPhrase()
+    {
+        return $this->reasonPhrase;
     }
 }

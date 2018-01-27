@@ -30,35 +30,6 @@ trait RequestTrait
     }
 
     /**
-     * @return string
-     */
-    public function getRequestTarget()
-    {
-        if ($this->requestTarget) {
-            return $this->requestTarget;
-        }
-
-        $target = $this->uri->getPath();
-        if ($target === '') {
-            $target .= '/';
-        }
-
-        if ($this->uri->getQuery()) {
-            $target .= '?' . $this->uri->getQuery();
-        }
-
-        return $target;
-    }
-
-    /**
-     * @return UriInterface
-     */
-    public function getUri()
-    {
-        return $this->uri;
-    }
-
-    /**
      * @param string $method
      * @return \DevOp\Core\Http\Request|$this
      */
@@ -75,6 +46,29 @@ trait RequestTrait
     }
 
     /**
+     * @return string
+     */
+    public function getRequestTarget()
+    {
+        
+        if ($this->requestTarget) {
+            return $this->requestTarget;
+        }
+
+        $target = $this->uri->getPath();
+
+        if ($target === '') {
+            $target .= '/';
+        }
+
+        if ($this->uri->getQuery()) {
+            $target .= '?' . $this->uri->getQuery();
+        }
+
+        return $target;
+    }
+
+    /**
      * @param string $requestTarget
      * @return \DevOp\Core\Http\Request|$this
      */
@@ -88,6 +82,14 @@ trait RequestTrait
         $clone->requestTarget = $requestTarget;
 
         return $clone;
+    }
+
+    /**
+     * @return UriInterface
+     */
+    public function getUri()
+    {
+        return $this->uri;
     }
 
     /**

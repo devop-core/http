@@ -14,12 +14,12 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $this->request = new \DevOp\Core\Http\Request('GET', '');
     }
 
-    public function testGetProtocolVersion()
+    public function testGetMethod()
     {
         $this->assertEquals('GET', $this->request->getMethod());
     }
 
-    public function testWithProtocolVersion()
+    public function testWithMethod()
     {
         $clone = $this->request->withMethod('TRACE');
         $this->assertEquals('TRACE', $clone->getMethod());

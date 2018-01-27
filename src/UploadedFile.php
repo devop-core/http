@@ -48,9 +48,7 @@ class UploadedFile implements UploadedFileInterface
      */
     public function __construct($stream, $size, $error = UPLOAD_ERR_OK, $clientFilename = null, $clientMediaType = null)
     {
-        if (is_string($stream)) {
-            $this->file = $stream;
-        } else if (is_resource($stream)) {
+        if (is_string($stream) || is_resource($stream)) {
             $this->stream = new Stream($stream);
         } else if ($stream instanceof StreamInterface) {
             $this->stream = $stream;

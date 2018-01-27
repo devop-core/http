@@ -1,7 +1,21 @@
 <?php
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+namespace DevOp\Core\Http\Test;
 
+class ServerRequestTest extends \PHPUnit_Framework_TestCase
+{
+
+    /**
+     * @var \DevOp\Core\Http\ServerRequest
+     */
+    private $serverRequest;
+
+    public function setUp()
+    {
+        $this->serverRequest = new \DevOp\Core\Http\ServerRequest('GET', '/');
+    }
+
+    public function testGetMethod()
+    {
+        $this->assertEmpty($this->serverRequest->getAttributes());
+    }
+}
