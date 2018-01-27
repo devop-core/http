@@ -138,7 +138,7 @@ class Uri implements UriInterface
     }
 
     /**
-     * @return strig
+     * @return string
      */
     public function getPath()
     {
@@ -146,7 +146,7 @@ class Uri implements UriInterface
     }
 
     /**
-     * @return int
+     * @return int|string
      */
     public function getPort()
     {
@@ -154,7 +154,7 @@ class Uri implements UriInterface
     }
 
     /**
-     * @return strig
+     * @return string
      */
     public function getQuery()
     {
@@ -162,7 +162,7 @@ class Uri implements UriInterface
     }
 
     /**
-     * @return strig
+     * @return string
      */
     public function getScheme()
     {
@@ -170,7 +170,7 @@ class Uri implements UriInterface
     }
 
     /**
-     * @return strig
+     * @return string
      */
     public function getUserInfo()
     {

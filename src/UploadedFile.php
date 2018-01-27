@@ -34,7 +34,7 @@ class UploadedFile implements UploadedFileInterface
     private $file;
 
     /**
-     * @var \Psr\Http\Message\StreamInterface
+     * @var string|resource|\Psr\Http\Message\StreamInterface
      */
     private $stream;
 
@@ -122,7 +122,7 @@ class UploadedFile implements UploadedFileInterface
     }
 
     /**
-     * @param string|StreamInterface $targetPath
+     * @param string|resource|StreamInterface $targetPath
      * @throws \RuntimeException
      */
     public function moveTo($targetPath)
