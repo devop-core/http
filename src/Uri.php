@@ -55,7 +55,7 @@ class Uri implements UriInterface
     public static function createFromGlobals()
     {
         
-        $uri = new Uri('');
+        $uri = new Uri();
         
         $scheme = 'http';
         if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
@@ -92,11 +92,11 @@ class Uri implements UriInterface
     {
         $uri = $this->scheme;
         
-        if ($this->userInfo) {
+        if ($this->userInfo !== null) {
             $uri .= "//{$this->userInfo}";
         }
         
-        if ($this->port && !array_key_exists($this->port, self::$defaultPorts)) {
+        if ($this->port && !in_array($this->port, [self::$schemes['http'], self::$schemes['https']])) {
             $uri .= ":{$this->port}";
         }
         

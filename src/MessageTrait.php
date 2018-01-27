@@ -41,7 +41,7 @@ trait MessageTrait
 
     /**
      * @param StreamInterface $body
-     * @return \DevOp\Core\Http\Message|$this
+     * @return \DevOp\Core\Http\MessageTrait|$this
      */
     public function withBody(StreamInterface $body)
     {
@@ -55,6 +55,10 @@ trait MessageTrait
         return $clone;
     }
 
+    /**
+     * @param string $name
+     * @return boolean
+     */
     public function hasHeader($name)
     {
         return isset($this->headersName[strtolower($name)]);
@@ -77,6 +81,9 @@ trait MessageTrait
         return implode(', ', $this->getHeader($name));
     }
 
+    /**
+     * @return array)
+     */
     public function getHeaders()
     {
         return $this->headers;
@@ -84,8 +91,8 @@ trait MessageTrait
 
     /**
      * @param string $name
-     * @param array|string $value
-     * @return \DevOp\Core\Http\this
+     * @param string $value
+     * @return self
      */
     public function withHeader($name, $value)
     {
@@ -122,7 +129,7 @@ trait MessageTrait
 
     /**
      * @param string $name
-     * @return \DevOp\Core\Http\this
+     * @return self
      */
     public function withoutHeader($name)
     {

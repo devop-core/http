@@ -93,7 +93,7 @@ class Response implements ResponseInterface
     /**
      * @param int $code
      * @param string $reasonPhrase
-     * @return \DevOp\Core\Http\Response|$this
+     * @return self
      */
     public function withStatus($code, $reasonPhrase = '')
     {

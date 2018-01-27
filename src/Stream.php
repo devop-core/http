@@ -118,7 +118,7 @@ class Stream implements StreamInterface
     }
 
     /**
-     * @param string|key $key
+     * @param string|null $key
      * @return mixed
      */
     public function getMetadata($key = null)
@@ -193,7 +193,7 @@ class Stream implements StreamInterface
 
     /**
      * @param int $length
-     * @return boolean
+     * @return string
      * @throws \RuntimeException
      */
     public function read($length)

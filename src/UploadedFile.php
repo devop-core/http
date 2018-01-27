@@ -63,7 +63,7 @@ class UploadedFile implements UploadedFileInterface
     }
 
     /**
-     * @return \DevOp\Core\Http\UploadedFile
+     * @return self
      * @throws \InvalidArgumentException
      */
     public static function createFromGlobal()

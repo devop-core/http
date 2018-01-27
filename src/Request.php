@@ -19,7 +19,7 @@ class Request implements RequestInterface
      * @param Uri|string $uri
      * @param array $headers
      * @param Stream|string $body
-     * @param null|string $version
+     * @param string|null $version
      */
     public function __construct($method, $uri, array $headers = [], $body = 'php://memory', $version = '1.1')
     {
@@ -29,7 +29,7 @@ class Request implements RequestInterface
         $this->headers = $headers;
 
         if (!$uri instanceof UriInterface) {
-            $uri = new Uri($uri);
+            $uri = Uri::createFromGlobals();
         }
 
         if (!$body instanceof StreamInterface) {

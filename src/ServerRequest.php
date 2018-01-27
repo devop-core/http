@@ -43,7 +43,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     private $uploadedFiles = [];
 
     /**
-     * @return ServerRequest
+     * @return self
      */
     public static function createFromGlobals()
     {
@@ -85,7 +85,7 @@ class ServerRequest extends Request implements ServerRequestInterface
      * @param string|null $version
      * @param array $serverParams
      */
-    public function __construct($method, $uri, array $headers = array(), $body = 'php://memory', $version = '1.1', $serverParams = [])
+    public function __construct($method, $uri, array $headers = [], $body = 'php://memory', $version = '1.1', array $serverParams = [])
     {
         parent::__construct($method, $uri, $headers, $body, $version);
         $this->serverParams = $serverParams;
@@ -200,7 +200,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     }
 
     /**
-     * @param array $uploadedFiles
+     * @param UploadedFile[] $uploadedFiles
      * @return \DevOp\Core\Http\ServerRequest
      */
     public function withUploadedFiles(array $uploadedFiles)
