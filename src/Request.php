@@ -29,13 +29,15 @@ class Request implements RequestInterface
         $this->headers = $headers;
 
         if (!$uri instanceof UriInterface) {
+            /* @var $uri UriInterface */
             $uri = Uri::createFromGlobals();
         }
 
         if (!$body instanceof StreamInterface) {
+            /* @var $body StreamInterface */
             $body = new Stream($body);
         }
-
+        
         $this->uri = $uri;
         $this->body = $body;
     }

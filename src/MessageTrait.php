@@ -91,7 +91,7 @@ trait MessageTrait
 
     /**
      * @param string $name
-     * @param string $value
+     * @param mixed $value
      * @return self
      */
     public function withHeader($name, $value)

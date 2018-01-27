@@ -22,6 +22,12 @@ trait RequestTrait
     private $uri;
 
     /**
+     * @param string $name
+     * @return boolean
+     */
+    abstract public function hasHeader();
+
+    /**
      * @return string
      */
     public function getMethod()
@@ -50,7 +56,7 @@ trait RequestTrait
      */
     public function getRequestTarget()
     {
-        
+
         if ($this->requestTarget) {
             return $this->requestTarget;
         }

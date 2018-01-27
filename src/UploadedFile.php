@@ -29,7 +29,7 @@ class UploadedFile implements UploadedFileInterface
     private $size;
 
     /**
-     * @var resource
+     * @var string
      */
     private $file;
 
@@ -39,7 +39,7 @@ class UploadedFile implements UploadedFileInterface
     private $stream;
 
     /**
-     * @param StreamInterface $stream
+     * @param string|resource|StreamInterface $stream
      * @param int $size
      * @param int $error
      * @param string|null $clientFilename
@@ -63,7 +63,7 @@ class UploadedFile implements UploadedFileInterface
     }
 
     /**
-     * @return self
+     * @return array
      * @throws \InvalidArgumentException
      */
     public static function createFromGlobal()
@@ -114,7 +114,7 @@ class UploadedFile implements UploadedFileInterface
     }
 
     /**
-     * @return resource
+     * @return StreamInterface
      */
     public function getStream()
     {
@@ -122,7 +122,7 @@ class UploadedFile implements UploadedFileInterface
     }
 
     /**
-     * @param string $targetPath
+     * @param string|StreamInterface $targetPath
      * @throws \RuntimeException
      */
     public function moveTo($targetPath)
@@ -135,7 +135,7 @@ class UploadedFile implements UploadedFileInterface
         if ($this->file) {
             $upload = move_uploaded_file($this->file, $targetPath);
         } else if ($this->stream) {
-            $upload = copy_to_stream($this->stream, $targetPath);
+            $upload = stream_copy_to_stream($this->stream, $targetPath);
         } else {
             throw new \RuntimeException('Invalid uploaded file.');
         }

@@ -96,58 +96,82 @@ class Uri implements UriInterface
             $uri .= "//{$this->userInfo}";
         }
         
-        if ($this->port && !in_array($this->port, [self::$schemes['http'], self::$schemes['https']])) {
+        if ($this->port !== null && !in_array($this->port, [self::$schemes['http'], self::$schemes['https']])) {
             $uri .= ":{$this->port}";
         }
         
         $uri .= $this->path;
         
-        if ($this->query) {
+        if ($this->query !== null) {
             $uri .= "?{$this->query}";
         }
         
-        if ($this->fragment) {
+        if ($this->fragment !== null) {
             $uri .= "#{$this->fragment}";
         }
         
         return $uri;
     }
 
+    /**
+     * @return string
+     */
     public function getAuthority()
     {
         return ($this->userInfo ?: $this->userInfo) . $this->host . ($this->port ?: ":{$this->port}");
     }
 
+    /**
+     * @return string
+     */
     public function getFragment()
     {
         return $this->fragment;
     }
 
+    /**
+     * @return string
+     */
     public function getHost()
     {
         return $this->host;
     }
 
+    /**
+     * @return strig
+     */
     public function getPath()
     {
         return $this->path;
     }
 
+    /**
+     * @return int
+     */
     public function getPort()
     {
         return $this->port;
     }
 
+    /**
+     * @return strig
+     */
     public function getQuery()
     {
         return $this->query;
     }
 
+    /**
+     * @return strig
+     */
     public function getScheme()
     {
         return $this->scheme;
     }
 
+    /**
+     * @return strig
+     */
     public function getUserInfo()
     {
         return $this->userInfo;
