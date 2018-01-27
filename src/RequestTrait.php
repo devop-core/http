@@ -12,11 +12,6 @@ trait RequestTrait
     private $method;
 
     /**
-     * @var array
-     */
-    private $headers = [];
-
-    /**
      * @var string
      */
     private $requestTarget;
