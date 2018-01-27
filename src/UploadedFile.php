@@ -29,9 +29,19 @@ class UploadedFile implements UploadedFileInterface
     private $size;
 
     /**
+     * @var string|resource
+     */
+    private $file;
+
+    /**
      * @var StreamInterface
      */
     private $stream;
+    
+    /**
+     * @var boolean
+     */
+    private $moved = false;
 
     /**
      * @param string|resource|StreamInterface $stream
@@ -43,7 +53,9 @@ class UploadedFile implements UploadedFileInterface
      */
     public function __construct($stream, $size, $error = UPLOAD_ERR_OK, $clientFilename = null, $clientMediaType = null)
     {
-        if (is_string($stream) || is_resource($stream)) {
+        if (is_string($stream)) {
+            $this->file = $stream;
+        } else if (is_resource($stream)) {
             $this->stream = new Stream($stream);
         } else if ($stream instanceof StreamInterface) {
             $this->stream = $stream;
@@ -127,14 +139,16 @@ class UploadedFile implements UploadedFileInterface
             throw new \RuntimeException('Invalid targetPath specified.');
         }
 
-        if ($this->stream) {
-            $upload = stream_copy_to_stream($this->stream, $targetPath);
+        if ($this->file) {
+            $this->moved = move_uploaded_file($this->file, $targetPath);
+        } else if ($this->stream) {
+            $this->moved = stream_copy_to_stream($this->stream, $targetPath);
         } else {
             throw new \RuntimeException('Invalid uploaded file.');
         }
 
-        if (!$upload) {
-            throw new \RuntimeException('Erro while uploading file.');
+        if (!$this->moved) {
+            throw new \RuntimeException('Error  while uploading file.');
         }
     }
 }

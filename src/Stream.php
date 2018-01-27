@@ -8,9 +8,8 @@ class Stream implements StreamInterface
 
     /**
      * @var array
-     * @link http://php.net/manual/function.fopen.php
      */
-    protected $modes = [
+    private static $modes = [
         'readable' => [
             'r' => true, 'w+' => true, 'r+' => true, 'x+' => true, 'c+' => true,
             'rb' => true, 'w+b' => true, 'r+b' => true, 'x+b' => true,
@@ -159,7 +158,7 @@ class Stream implements StreamInterface
         }
 
         $mode = $this->getMetadata('mode');
-        return isset($this->modes['readable'][$mode]);
+        return isset(self::$modes['readable'][$mode]);
     }
 
     /**
@@ -188,7 +187,7 @@ class Stream implements StreamInterface
         }
 
         $mode = $this->getMetadata('mode');
-        return isset($this->modes['writable'][$mode]);
+        return isset(self::$modes['writable'][$mode]);
     }
 
     /**

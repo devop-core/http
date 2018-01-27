@@ -11,7 +11,7 @@ class UploadedFileTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->uploadedFile = new \DevOp\Core\Http\UploadedFile(new \DevOp\Core\Http\Stream('php://temp'), 3);
+        $this->uploadedFile = new \DevOp\Core\Http\UploadedFile(new \DevOp\Core\Http\Stream('php://temp'), 2, UPLOAD_ERR_OK, 'tempnam', '');
     }
     
     public function testConstructThrowException()
@@ -22,6 +22,9 @@ class UploadedFileTest extends \PHPUnit_Framework_TestCase
     
     public function testGetUploadedFileSize()
     {
-        return $this->assertEquals(3, $this->uploadedFile->getSize());
+        $this->assertEquals(2, $this->uploadedFile->getSize());
+        $this->assertEquals(UPLOAD_ERR_OK, $this->uploadedFile->getError());
+        $this->assertEquals('tempnam', $this->uploadedFile->getClientFilename());
+        $this->assertEquals('', $this->uploadedFile->getClientMediaType());
     }
 }
