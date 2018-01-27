@@ -44,7 +44,7 @@ class UploadedFile implements UploadedFileInterface
     private $moved = false;
 
     /**
-     * @param string|StreamInterface $stream
+     * @param string|resource|StreamInterface $stream
      * @param int $size
      * @param int $error
      * @param string|null $clientFilename
