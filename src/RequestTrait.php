@@ -25,7 +25,7 @@ trait RequestTrait
      * @param string $name
      * @return boolean
      */
-    abstract public function hasHeader();
+    abstract public function hasHeader($name);
 
     /**
      * @return string
