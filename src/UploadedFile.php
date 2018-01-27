@@ -29,11 +29,6 @@ class UploadedFile implements UploadedFileInterface
     private $size;
 
     /**
-     * @var string
-     */
-    private $file;
-
-    /**
      * @var StreamInterface
      */
     private $stream;
@@ -132,9 +127,7 @@ class UploadedFile implements UploadedFileInterface
             throw new \RuntimeException('Invalid targetPath specified.');
         }
 
-        if ($this->file) {
-            $upload = move_uploaded_file($this->file, $targetPath);
-        } else if ($this->stream) {
+        if ($this->stream) {
             $upload = stream_copy_to_stream($this->stream, $targetPath);
         } else {
             throw new \RuntimeException('Invalid uploaded file.');
