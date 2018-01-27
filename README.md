@@ -17,21 +17,6 @@ Via Composer
 $ composer require devop-core/http
 ```
 
-## Usage
-
-``` php
-<?php
-use DevOp\Core\Config;
-
-include_once './vendor/autoload.php';
-
-$config = new Config('./config/config.php', 'dev', 'env.php');
-
-var_dump($config->get('database.password', 'test')); // get specific configuration option
-
-var_dump($config->all()); // get all configurations
-```
-
 ## Change log
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
