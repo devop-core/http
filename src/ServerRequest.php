@@ -23,7 +23,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     private $cookieParams = [];
 
     /**
-     * @var null|string|array|resource|object
+     * @var mixed
      */
     private $parsedBody;
 
@@ -119,7 +119,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     }
 
     /**
-     * @return null|string|array|resource|object
+     * @return mixed
      */
     public function getParsedBody()
     {
@@ -176,7 +176,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     }
 
     /**
-     * @param null|string|array|resource|object $data
+     * @param mixed $data
      * @return \DevOp\Core\Http\ServerRequest
      */
     public function withParsedBody($data)

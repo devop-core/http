@@ -30,7 +30,7 @@ class Uri implements UriInterface
     private $path;
 
     /**
-     * @var string|null
+     * @var int|null
      */
     private $port;
 
@@ -146,7 +146,7 @@ class Uri implements UriInterface
     }
 
     /**
-     * @return int|string
+     * @return null|int
      */
     public function getPort()
     {
