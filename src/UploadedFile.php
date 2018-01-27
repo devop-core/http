@@ -44,7 +44,7 @@ class UploadedFile implements UploadedFileInterface
     private $moved = false;
 
     /**
-     * @param string|resource|StreamInterface $stream
+     * @param string|StreamInterface $stream
      * @param int $size
      * @param int $error
      * @param string|null $clientFilename
@@ -142,7 +142,7 @@ class UploadedFile implements UploadedFileInterface
         if ($this->file) {
             $this->moved = move_uploaded_file($this->file, $targetPath);
         } else if ($this->stream) {
-            $this->moved = stream_copy_to_stream($this->stream, $targetPath);
+            $this->moved = stream_copy_to_stream($this->stream, $targetPath) > 0;
         } else {
             throw new \RuntimeException('Invalid uploaded file.');
         }
