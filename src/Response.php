@@ -3,10 +3,8 @@ namespace DevOp\Core\Http;
 
 use Psr\Http\Message\ResponseInterface;
 
-class Response implements ResponseInterface
+class Response extends Message implements ResponseInterface
 {
-
-    use MessageTrait;
 
     /**
      * @link https://gist.github.com/Stoffo/53e093450aed067a8fa8
@@ -81,6 +79,19 @@ class Response implements ResponseInterface
      */
     private $reasonPhrase;
 
+    /**
+     * @param string $body
+     * @param int $status
+     * @param array $headers
+     */
+    public function __construct($body = 'php://memory', $status = 200, array $headers = [])
+    {
+        $this->setHeaders($headers);
+        $this->statusCode = (int) $status;
+        $this->body = $this->getStream($body, "wb+");
+        
+    }
+    
     /**
      *
      * @var int

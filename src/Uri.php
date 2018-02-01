@@ -17,7 +17,12 @@ class Uri implements UriInterface
     /**
      * @var string|null
      */
-    private $fragment;
+    private $scheme;
+
+    /**
+     * @var string|null
+     */
+    private $userInfo;
 
     /**
      * @var string|null
@@ -25,14 +30,14 @@ class Uri implements UriInterface
     private $host;
 
     /**
-     * @var string|null
-     */
-    private $path;
-
-    /**
      * @var int|null
      */
     private $port;
+
+    /**
+     * @var string
+     */
+    private $path = '';
 
     /**
      * @var string|null
@@ -42,12 +47,7 @@ class Uri implements UriInterface
     /**
      * @var string|null
      */
-    private $scheme;
-
-    /**
-     * @var string|null
-     */
-    private $userInfo;
+    private $fragment;
 
     /**
      * @return \DevOp\Core\Http\Uri
@@ -87,32 +87,39 @@ class Uri implements UriInterface
 
     public function __construct($uri = '')
     {
-        if ($uri !== '') {
-            $components = parse_url($uri);
-            if (isset($components['scheme'])) {
-                $this->scheme = $components['scheme'];
-            }
-            if (isset($components['host'])) {
-                $this->host = $components['host'];
-            }
-            if (isset($components['port']) && !in_array($components['port'], [self::$schemes['http'], self::$schemes['https']])) {
-                $this->port = $components['port'];
-            }
-            if (isset($components['path'])) {
-                $this->path = $components['path'];
-            }
-            if (isset($components['query'])) {
-                $this->query = $components['query'];
-            }
-            if (isset($components['fragment'])) {
-                $this->fragment = $components['fragment'];
-            }
-            if (isset($components['user'])) {
-                $this->userInfo = $components['user'];
-            }
-            if (isset($components['pass'])) {
-                $this->userInfo .= ':' . $components['pass'];
-            }
+        
+        if ($uri instanceof UriInterface) {
+            return $uri;
+        }
+        
+        if (!is_string($uri)) {
+            throw new \InvalidArgumentException('Argument must be a string.');
+        }
+        
+        $components = parse_url($uri);
+        if (isset($components['scheme'])) {
+            $this->scheme = $components['scheme'];
+        }
+        if (isset($components['host'])) {
+            $this->host = $components['host'];
+        }
+        if (isset($components['port']) && !in_array($components['port'], [self::$schemes['http'], self::$schemes['https']])) {
+            $this->port = $components['port'];
+        }
+        if (isset($components['path'])) {
+            $this->path = $components['path'];
+        }
+        if (isset($components['query'])) {
+            $this->query = $components['query'];
+        }
+        if (isset($components['fragment'])) {
+            $this->fragment = $components['fragment'];
+        }
+        if (isset($components['user'])) {
+            $this->userInfo = $components['user'];
+        }
+        if (isset($components['pass'])) {
+            $this->userInfo .= ':' . $components['pass'];
         }
     }
 

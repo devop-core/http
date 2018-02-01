@@ -51,7 +51,7 @@ class UploadedFile implements UploadedFileInterface
      * @param string|null $clientMediaType
      * @throws \RuntimeException
      */
-    public function __construct($stream, $size, $error = UPLOAD_ERR_OK, $clientFilename = null, $clientMediaType = null)
+    public function __construct($stream, $size = 0, $error = UPLOAD_ERR_OK, $clientFilename = null, $clientMediaType = null)
     {
         if (is_string($stream)) {
             $this->file = $stream;

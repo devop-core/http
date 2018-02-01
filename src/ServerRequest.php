@@ -50,17 +50,14 @@ class ServerRequest extends Request implements ServerRequestInterface
 
         $uri = Uri::createFromGlobals();
 
-        $method = 'GET';
-        if (isset($_SERVER['REQUEST_METHOD'])) {
-            $method = $_SERVER['REQUEST_METHOD'];
-        }
+        $method = $_SERVER['REQUEST_METHOD'] ?: 'GET';
 
         $headers = [];
         if (function_exists('getallheaders')) {
             $headers = getallheaders();
         }
 
-        $body = new Stream('php://memory');
+        $body = 'php://memory';
 
         $protocol = '1.1';
         if (isset($_SERVER['SERVER_PROTOCOL'])) {
