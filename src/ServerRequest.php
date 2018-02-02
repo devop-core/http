@@ -1,16 +1,16 @@
 <?php
 namespace DevOp\Core\Http;
 
-use DevOp\Core\Http\Request;
+use DevOp\Core\Http\ServerRequest;
 use Psr\Http\Message\UriInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class ServerRequest extends Request implements ServerRequestInterface
+class ServerRequest implements ServerRequestInterface
 {
 
-    use MessageTrait;
-    use RequestTrait;
+    use Traits\MessageTrait;
+    use Traits\RequestTrait;
 
     /**
      * @var array
@@ -23,9 +23,9 @@ class ServerRequest extends Request implements ServerRequestInterface
     private $cookieParams = [];
 
     /**
-     * @var mixed
+     * @var array
      */
-    private $parsedBody;
+    private $parsedBody = [];
 
     /**
      * @var array
@@ -43,51 +43,17 @@ class ServerRequest extends Request implements ServerRequestInterface
     private $uploadedFiles = [];
 
     /**
-     * @return self
-     */
-    public static function createFromGlobals()
-    {
-
-        $uri = Uri::createFromGlobals();
-
-        $method = $_SERVER['REQUEST_METHOD'] ?: 'GET';
-
-        $headers = [];
-        if (function_exists('getallheaders')) {
-            $headers = getallheaders();
-        }
-
-        $body = 'php://memory';
-
-        $protocol = '1.1';
-        if (isset($_SERVER['SERVER_PROTOCOL'])) {
-            $protocol = str_replace('HTTP/', '', $_SERVER['SERVER_PROTOCOL']);
-        }
-
-        $serverRequest = new ServerRequest($method, $uri, $headers, $body, $protocol, $_SERVER);
-
-        return $serverRequest
-                ->withParsedBody($_POST)
-                ->withQueryParams($_GET)
-                ->withCookieParams($_COOKIE)
-                ->withUploadedFiles(UploadedFile::createFromGlobal());
-    }
-
-    /**
-     * 
      * @param string $method
-     * @param UriInterface|string $uri
+     * @param UriInterface $uri
      * @param array $headers
-     * @param string|null|resource|StreamInterface $body
-     * @param string|null $version
-     * @param array $serverParams
+     * @param StreamInterface $body
+     * @param string $version
      */
-    public function __construct($method, $uri, array $headers = [], $body = 'php://memory', $version = '1.1', array $serverParams = [])
+    public function __construct($method, UriInterface $uri, array $headers = [], StreamInterface $body, $version = '1.1')
     {
-        parent::__construct($method, $uri, $headers, $body, $version);
-        $this->serverParams = $serverParams;
+        return new Request($method, $uri, $headers, $body, $version);
     }
-    
+
     /**
      * @return string
      */

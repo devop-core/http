@@ -1,31 +1,30 @@
 <?php
 namespace DevOp\Core\Http;
 
-use DevOp\Core\Http\Uri;
-use DevOp\Core\Http\Stream;
+use Psr\Http\Message\UriInterface;
+use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\RequestInterface;
 
 class Request implements RequestInterface
 {
 
-    use MessageTrait;
-    use RequestTrait;
+    use Traits\MessageTrait;
+    use Traits\RequestTrait;
 
     /**
      * 
      * @param string $method
-     * @param Uri|string $uri
+     * @param UriInterface $uri
      * @param array $headers
-     * @param Stream|string $body
-     * @param string|null $version
+     * @param StreamInterface $body
+     * @param string $protocolVersion
      */
-    public function __construct($method, $uri, array $headers = [], $body = 'php://memory', $version = '1.1')
+    public function __construct($method, UriInterface $uri, array $headers = [], StreamInterface $body = null, $protocolVersion = '1.1')
     {
-
         $this->method = $method;
-        $this->uri = new Uri($uri);
+        $this->uri = $uri;
+        $this->stream = $body;
         $this->headers = $headers;
-        $this->body = new Stream($body);
-        $this->protocolVersion = $version;
+        $this->protocolVersion = $protocolVersion;
     }
 }

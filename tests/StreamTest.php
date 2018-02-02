@@ -10,10 +10,10 @@ class StreamTest extends \PHPUnit_Framework_TestCase
      * @var \Psr\Http\Message\StreamInterface
      */
     private $stream;
-    
+
     public function setUp()
     {
-        $this->stream = new Stream('php://memory', 'wb+');
+        $this->stream = (new \DevOp\Core\Http\Factory\StreamFactory())->createStream('test');
     }
 
     public function testStreamIsReadable()

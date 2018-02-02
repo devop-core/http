@@ -30,21 +30,11 @@ class Stream implements StreamInterface
     private $stream;
 
     /**
-     * @param resource|string $handle
-     * @param string|null $mode
+     * @param StreamInterface $handle
      * @throws \InvalidArgumentException
      */
-    public function __construct($handle, $mode = 'r')
+    public function __construct($handle)
     {
-
-        if (is_string($handle)) {
-            $handle = fopen($handle, $mode);
-        }
-
-        if (!is_resource($handle)) {
-            throw new \InvalidArgumentException('Argument must be a valid stream.');
-        }
-
         $this->stream = $handle;
     }
 

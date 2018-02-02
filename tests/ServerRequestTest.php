@@ -11,7 +11,9 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->serverRequest = new \DevOp\Core\Http\ServerRequest('GET', '/');
+        $uri = (new \DevOp\Core\Http\Factory\UriFactory())->createUri('');
+        $body = (new \DevOp\Core\Http\Factory\StreamFactory())->createStream('test');
+        $this->serverRequest = new \DevOp\Core\Http\ServerRequest('GET', $uri, [], $body, '1.1');
     }
 
     public function testGetMethod()
