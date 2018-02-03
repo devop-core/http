@@ -1,7 +1,6 @@
 <?php
 namespace DevOp\Core\Http;
 
-use DevOp\Core\Http\ServerRequest;
 use Psr\Http\Message\UriInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -46,10 +45,10 @@ class ServerRequest implements ServerRequestInterface
      * @param string $method
      * @param UriInterface $uri
      * @param array $headers
-     * @param StreamInterface $body
+     * @param string|resource|StreamInterface $body
      * @param string $version
      */
-    public function __construct($method, UriInterface $uri, array $headers = [], StreamInterface $body, $version = '1.1')
+    public function __construct($method, UriInterface $uri, array $headers = [], $body = 'php://temp', $version = '1.1')
     {
         return new Request($method, $uri, $headers, $body, $version);
     }

@@ -14,16 +14,24 @@ class Request implements RequestInterface
     /**
      * 
      * @param string $method
-     * @param UriInterface $uri
+     * @param string|UriInterface $uri
      * @param array $headers
-     * @param StreamInterface $body
+     * @param string|resource|StreamInterface $body
      * @param string $protocolVersion
      */
     public function __construct($method, UriInterface $uri, array $headers = [], StreamInterface $body = null, $protocolVersion = '1.1')
     {
         $this->method = $method;
-        $this->uri = $uri;
-        $this->stream = $body;
+        $this->uri = new Uri($uri);
+        
+        if ($body instanceof StreamInterface) {
+            $this->body = $body;
+        } else if (is_resource($body)) {
+            $this->body = (new Factory\StreamFactory())->createStreamFromFile($body, "r+");
+        } else if (is_string($body)) {
+            $this->body = (new Factory\StreamFactory())->createStream($body);
+        }
+        
         $this->headers = $headers;
         $this->protocolVersion = $protocolVersion;
     }

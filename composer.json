@@ -1,7 +1,7 @@
 {
     "name": "devop-core/http",
     "description": "Http Message Service",
-    "keywords": ["php", "http", "request", "psr7"],
+    "keywords": ["php", "http", "request", "psr7", "psr17"],
     "homepage": "https://devop-studio.com",
     "type": "library",
     "license": "MIT",

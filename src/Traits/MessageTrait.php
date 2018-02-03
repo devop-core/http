@@ -32,7 +32,7 @@ trait MessageTrait
     private $stream;
 
     /**
-     * @return Stream
+     * @return StreamInterface
      */
     public function getBody()
     {
@@ -111,6 +111,11 @@ trait MessageTrait
         return $clone;
     }
 
+    /**
+     * @param string $name
+     * @param string $value
+     * @return self
+     */
     public function withAddedHeader($name, $value)
     {
         $clone = new $this;
@@ -145,6 +150,9 @@ trait MessageTrait
         return $clone;
     }
 
+    /**
+     * @return string
+     */
     public function getProtocolVersion()
     {
         return $this->protocolVersion;

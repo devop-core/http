@@ -30,7 +30,7 @@ class Stream implements StreamInterface
     private $stream;
 
     /**
-     * @param StreamInterface $handle
+     * @param resource $handle
      * @throws \InvalidArgumentException
      */
     public function __construct($handle)
