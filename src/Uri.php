@@ -50,19 +50,14 @@ class Uri implements UriInterface
     private $fragment;
 
     /**
-     * @param string|UriInterface $uri
+     * @param UriInterface|string $uri
      * @return UriInterface
-     * @throws \InvalidArgumentException
      */
     public function __construct($uri = '')
     {
 
         if ($uri instanceof UriInterface) {
             return $uri;
-        }
-
-        if (!is_string($uri)) {
-            throw new \InvalidArgumentException('Argument must be a string.');
         }
 
         $components = array_merge(array(

@@ -109,7 +109,6 @@ trait RequestTrait
             return $this;
         }
 
-        /* @var $clone \DevOp\Core\Http\Request */
         $clone = clone $this;
         $clone->uri = $uri;
 

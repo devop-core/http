@@ -141,7 +141,7 @@ class UploadedFile implements UploadedFileInterface
 
         if ($this->file && is_string($this->file)) {
             $this->moved = move_uploaded_file($this->file, $targetPath);
-        } else if ($this->stream instanceof StreamInterface) {
+        } else if ($this->stream) {
             $this->moved = stream_copy_to_stream($this->stream->detach(), $targetPath) > 0;
         } else {
             throw new \RuntimeException('Invalid uploaded file.');
