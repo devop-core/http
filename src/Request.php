@@ -28,7 +28,7 @@ class Request implements RequestInterface
             $this->body = $body;
         } else if (is_resource($body)) {
             $this->body = (new Factory\StreamFactory())->createStreamFromResource($body);
-        } else if (is_string($body)) {
+        } else {
             $this->body = (new Factory\StreamFactory())->createStreamFromFile($body, "r+");
         }
 

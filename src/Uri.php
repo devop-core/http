@@ -50,7 +50,7 @@ class Uri implements UriInterface
     private $fragment;
 
     /**
-     * @param string|UriInterface $uri
+     * @param string $uri
      * @return UriInterface
      * @throws \InvalidArgumentException
      */

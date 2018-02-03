@@ -15,6 +15,11 @@ class StreamFactory implements StreamFactoryInterface
     public function createStream($content = '')
     {
         $resource = fopen("php://temp", "r+");
+        
+        if (!is_resource($resource)) {
+            throw new \InvalidArgumentException('Error while creating PHP stream');
+        }
+        
         fwrite($resource, $content);
         rewind($resource);
 
@@ -30,6 +35,10 @@ class StreamFactory implements StreamFactoryInterface
     {
         $resource = fopen($filename, $mode);
 
+        if (!is_resource($resource)) {
+            throw new \InvalidArgumentException('Error while creating PHP stream');
+        }
+        
         return $this->createStreamFromResource($resource);
     }
 

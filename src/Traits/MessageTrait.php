@@ -41,7 +41,7 @@ trait MessageTrait
 
     /**
      * @param StreamInterface $body
-     * @return \DevOp\Core\Http\MessageTrait|$this
+     * @return self
      */
     public function withBody(StreamInterface $body)
     {
@@ -106,7 +106,7 @@ trait MessageTrait
         }
 
         $clone->headersName[$normalize] = $name;
-        $clone->headers[$normalize] = is_array($value) ? $value : [$value];
+        $clone->headers[$normalize] = !is_array($value) ? [$value] : $value;
 
         return $clone;
     }
@@ -123,10 +123,10 @@ trait MessageTrait
         $normalize = strtolower($name);
 
         if ($clone->hasHeader($name)) {
-            $clone->headers[$normalize] = array_merge($this->headers, is_array($value) ? $value : [$value]);
+            $clone->headers[$normalize] = array_merge($this->headers, (!is_array($value) ? [$value] : $value));
         } else {
             $clone->headersName[$normalize] = $name;
-            $clone->headers[$normalize] = is_array($value) ? $value : [$value];
+            $clone->headers[$normalize] = !is_array($value) ? [$value] : $value;
         }
 
         return $clone;

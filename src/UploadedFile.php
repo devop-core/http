@@ -37,14 +37,14 @@ class UploadedFile implements UploadedFileInterface
      * @var StreamInterface
      */
     private $stream;
-    
+
     /**
      * @var boolean
      */
     private $moved = false;
 
     /**
-     * @param string|resource|StreamInterface $stream
+     * @param StreamInterface|resource|string $stream
      * @param int $size
      * @param int $error
      * @param string|null $clientFilename
@@ -53,12 +53,12 @@ class UploadedFile implements UploadedFileInterface
      */
     public function __construct($stream, $size = 0, $error = UPLOAD_ERR_OK, $clientFilename = null, $clientMediaType = null)
     {
-        if (is_string($stream)) {
-            $this->file = $stream;
+        if ($stream instanceof StreamInterface) {
+            $this->stream = $stream;
         } else if (is_resource($stream)) {
             $this->stream = new Stream($stream);
-        } else if ($stream instanceof StreamInterface) {
-            $this->stream = $stream;
+        } else if (is_string($stream)) {
+            $this->file = $stream;
         } else {
             throw new \RuntimeException('Invalid uploaded file.');
         }
