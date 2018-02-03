@@ -27,11 +27,6 @@ trait MessageTrait
     protected $protocolVersion = 1.1;
 
     /**
-     * @var StreamInterface
-     */
-    protected $stream;
-
-    /**
      * @return StreamInterface
      */
     public function getBody()
@@ -45,12 +40,12 @@ trait MessageTrait
      */
     public function withBody(StreamInterface $body)
     {
-        if ($body === $this->stream) {
+        if ($body === $this->body) {
             return $this;
         }
 
         $clone = clone $this;
-        $clone->stream = $body;
+        $clone->body = $body;
 
         return $clone;
     }
@@ -71,7 +66,7 @@ trait MessageTrait
     public function getHeader($name)
     {
         if ($this->hasHeader($name)) {
-            return [$this->headers[$this->headersName[strtolower($name)]]];
+            return $this->headers[$this->headersName[strtolower($name)]];
         }
         return [];
     }
@@ -96,17 +91,17 @@ trait MessageTrait
      */
     public function withHeader($name, $value)
     {
-        $clone = new $this;
+        $clone = clone $this;
 
         $normalize = strtolower($name);
 
-        if ($clone->hasHeader($name)) {
+        if ($clone->hasHeader($normalize)) {
             unset($clone->headers[$this->headersName[$normalize]]);
             unset($clone->headersName[$normalize]);
         }
 
         $clone->headersName[$normalize] = $name;
-        $clone->headers[$normalize] = !is_array($value) ? [$value] : $value;
+        $clone->headers[$name] = !is_array($value) ? [$value] : $value;
 
         return $clone;
     }
@@ -118,15 +113,15 @@ trait MessageTrait
      */
     public function withAddedHeader($name, $value)
     {
-        $clone = new $this;
+        $clone = clone $this;
 
         $normalize = strtolower($name);
 
-        if ($clone->hasHeader($name)) {
-            $clone->headers[$normalize] = array_merge($this->headers, (!is_array($value) ? [$value] : $value));
+        if ($clone->hasHeader($normalize)) {
+            $clone->headers[$normalize] = array_merge($this->headers[$normalize], (!is_array($value) ? [$value] : $value));
         } else {
             $clone->headersName[$normalize] = $name;
-            $clone->headers[$normalize] = !is_array($value) ? [$value] : $value;
+            $clone->headers[$name] = !is_array($value) ? [$value] : $value;
         }
 
         return $clone;
@@ -138,7 +133,7 @@ trait MessageTrait
      */
     public function withoutHeader($name)
     {
-        $clone = new $this;
+        $clone = clone $this;
 
         $normalize = strtolower($name);
 

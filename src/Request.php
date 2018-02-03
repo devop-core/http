@@ -14,7 +14,7 @@ class Request implements RequestInterface
     /**
      * 
      * @param string $method
-     * @param string|UriInterface $uri
+     * @param UriInterface $uri
      * @param array $headers
      * @param string|resource|StreamInterface $body
      * @param string $protocolVersion
@@ -29,10 +29,20 @@ class Request implements RequestInterface
         } else if (is_resource($body)) {
             $this->body = (new Factory\StreamFactory())->createStreamFromResource($body);
         } else {
-            $this->body = (new Factory\StreamFactory())->createStreamFromFile($body, "r+");
+            $this->body = (new Factory\StreamFactory())->createStreamFromFile($body, "wb+");
         }
 
-        $this->headers = $headers;
+        foreach ($headers AS $header => $value) {
+            $normalize = strtolower($value);
+            $this->headersName[$header] = $normalize;
+            $this->headers[$normalize] = $value;
+        }
+        
+        if (!$this->hasHeader('host')) {
+            $this->headersName['host'] = 'Host';
+            $this->headers['Host'] = [!empty($this->uri->getHost()) ? $this->uri->getHost() : 'localhost'];
+        }
+
         $this->protocolVersion = $protocolVersion;
     }
 }

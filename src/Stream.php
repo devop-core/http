@@ -31,7 +31,6 @@ class Stream implements StreamInterface
 
     /**
      * @param resource $handle
-     * @throws \InvalidArgumentException
      */
     public function __construct($handle)
     {
@@ -44,7 +43,6 @@ class Stream implements StreamInterface
     public function __toString()
     {
         try {
-            $this->rewind();
             return $this->getContents();
         } catch (\Exception $e) {
             return '';
@@ -97,10 +95,12 @@ class Stream implements StreamInterface
             throw new \RuntimeException('Empty stream');
         }
 
-        if ($this->isReadable()) {
+        if (!$this->isReadable()) {
             throw new \RuntimeException('Unable to read stream');
         }
 
+        rewind($this->stream);
+        
         return (string) stream_get_contents($this->stream);
     }
 
@@ -197,7 +197,7 @@ class Stream implements StreamInterface
      */
     public function rewind()
     {
-        if ($this->isSeekable()) {
+        if (!$this->isSeekable()) {
             throw new \RuntimeException('Stream is not seekable');
         }
 
