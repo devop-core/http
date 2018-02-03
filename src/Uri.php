@@ -77,11 +77,7 @@ class Uri implements UriInterface
         $this->path = $components['path'];
         $this->query = $components['query'];
         $this->fragment = $components['fragment'];
-        $this->userInfo = $components['user'];
-
-        if (isset($components['pass'])) {
-            $this->userInfo .= ":{$components['pass']}";
-        }
+        $this->userInfo = implode(':', array_filter([$components['user'], $components['pass']]));
     }
 
     /**
@@ -95,7 +91,7 @@ class Uri implements UriInterface
         }
         return null;
     }
-
+    
     /**
      * @return string
      */
