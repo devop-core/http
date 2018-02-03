@@ -9,17 +9,17 @@ trait RequestTrait
     /**
      * @var string
      */
-    private $method;
+    protected $method;
 
     /**
      * @var string
      */
-    private $requestTarget;
+    protected $requestTarget;
 
     /**
      * @var UriInterface
      */
-    private $uri;
+    protected $uri;
 
     /**
      * @param string $name

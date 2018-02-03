@@ -9,27 +9,27 @@ trait MessageTrait
     /**
      * @var StreamInterface
      */
-    private $body;
+    protected $body;
 
     /**
      * @var array
      */
-    private $headers = [];
+    protected $headers = [];
 
     /**
      * @var array
      */
-    private $headersName = [];
+    protected $headersName = [];
 
     /**
      * @var string
      */
-    private $protocolVersion = 1.1;
+    protected $protocolVersion = 1.1;
 
     /**
      * @var StreamInterface
      */
-    private $stream;
+    protected $stream;
 
     /**
      * @return StreamInterface
