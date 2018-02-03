@@ -65,11 +65,20 @@ class Uri implements UriInterface
             throw new \InvalidArgumentException('Argument must be a string.');
         }
 
-        $components = parse_url($uri);
+        $components = array_merge(array(
+            'scheme' => '',
+            'host' => '',
+            'port' => '',
+            'user' => '',
+            'pass' => '',
+            'path' => '',
+            'query' => '',
+            'fragment' => ''
+            ), parse_url($uri));
 
         $this->scheme = $components['scheme'];
         $this->host = $components['host'];
-
+        $this->port = $this->isStandartPort($components['port']);
         $this->path = $components['path'];
         $this->query = $components['query'];
         $this->fragment = $components['fragment'];
@@ -78,10 +87,18 @@ class Uri implements UriInterface
         if (isset($components['pass'])) {
             $this->userInfo .= ":{$components['pass']}";
         }
+    }
 
-        if (isset($components['port']) && !in_array($components['port'], [self::$schemes['http'], self::$schemes['https']])) {
-            $this->port = $components['port'];
+    /**
+     * @param int $port
+     * @return int|null
+     */
+    public function isStandartPort($port)
+    {
+        if (!in_array($port, [self::$schemes['http'], self::$schemes['https']])) {
+            return $port;
         }
+        return null;
     }
 
     /**
