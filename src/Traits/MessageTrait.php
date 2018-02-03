@@ -113,7 +113,7 @@ trait MessageTrait
 
     /**
      * @param string $name
-     * @param string $value
+     * @param mixed $value
      * @return self
      */
     public function withAddedHeader($name, $value)
@@ -160,7 +160,7 @@ trait MessageTrait
 
     /**
      * @param string $version
-     * @return \DevOp\Core\Http\Message|$this
+     * @return self
      */
     public function withProtocolVersion($version)
     {

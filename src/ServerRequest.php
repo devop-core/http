@@ -175,7 +175,7 @@ class ServerRequest implements ServerRequestInterface
 
     /**
      * @param string $name
-     * @return \DevOp\Core\Http\ServerRequest|$this
+     * @return self
      */
     public function withoutAttribute($name)
     {

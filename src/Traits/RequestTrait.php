@@ -37,7 +37,7 @@ trait RequestTrait
 
     /**
      * @param string $method
-     * @return \DevOp\Core\Http\Request|$this
+     * @return self
      */
     public function withMethod($method)
     {
@@ -76,7 +76,7 @@ trait RequestTrait
 
     /**
      * @param string $requestTarget
-     * @return \DevOp\Core\Http\Request|$this
+     * @return self
      */
     public function withRequestTarget($requestTarget)
     {
@@ -101,7 +101,7 @@ trait RequestTrait
     /**
      * @param UriInterface $uri
      * @param boolean $preserveHost
-     * @return \DevOp\Core\Http\Request|$this
+     * @return self
      */
     public function withUri(UriInterface $uri, $preserveHost = false)
     {
@@ -109,6 +109,7 @@ trait RequestTrait
             return $this;
         }
 
+        /* @var $clone \DevOp\Core\Http\Request */
         $clone = clone $this;
         $clone->uri = $uri;
 

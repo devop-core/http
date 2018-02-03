@@ -44,7 +44,7 @@ class UploadedFile implements UploadedFileInterface
     private $moved = false;
 
     /**
-     * @param StreamInterface|resource|string $stream
+     * @param mixed $stream
      * @param int $size
      * @param int $error
      * @param string|null $clientFilename
@@ -139,10 +139,10 @@ class UploadedFile implements UploadedFileInterface
             throw new \RuntimeException('Invalid targetPath specified.');
         }
 
-        if ($this->file) {
+        if ($this->file && is_string($this->file)) {
             $this->moved = move_uploaded_file($this->file, $targetPath);
-        } else if ($this->stream) {
-            $this->moved = stream_copy_to_stream($this->stream, $targetPath) > 0;
+        } else if ($this->stream instanceof StreamInterface) {
+            $this->moved = stream_copy_to_stream($this->stream->detach(), $targetPath) > 0;
         } else {
             throw new \RuntimeException('Invalid uploaded file.');
         }

@@ -57,10 +57,6 @@ class Uri implements UriInterface
     public function __construct($uri = '')
     {
 
-        if ($uri instanceof UriInterface) {
-            return $uri;
-        }
-
         if (!is_string($uri)) {
             throw new \InvalidArgumentException('Argument must be a string.');
         }
@@ -195,7 +191,7 @@ class Uri implements UriInterface
 
     /**
      * @param string $fragment
-     * @return \DevOp\Core\Http\Uri|$this
+     * @return self
      */
     public function withFragment($fragment)
     {
@@ -211,7 +207,7 @@ class Uri implements UriInterface
 
     /**
      * @param string $host
-     * @return \DevOp\Core\Http\Uri|$this
+     * @return self
      */
     public function withHost($host)
     {
@@ -227,7 +223,7 @@ class Uri implements UriInterface
 
     /**
      * @param string $path
-     * @return \DevOp\Core\Http\Uri|$this
+     * @return self
      */
     public function withPath($path)
     {
@@ -243,7 +239,7 @@ class Uri implements UriInterface
 
     /**
      * @param int $port
-     * @return \DevOp\Core\Http\Uri|$this
+     * @return self
      */
     public function withPort($port)
     {
@@ -259,7 +255,7 @@ class Uri implements UriInterface
 
     /**
      * @param string  $query
-     * @return \DevOp\Core\Http\Uri|$this
+     * @return self
      */
     public function withQuery($query)
     {
@@ -275,7 +271,7 @@ class Uri implements UriInterface
 
     /**
      * @param string $scheme
-     * @return \DevOp\Core\Http\Uri|$this
+     * @return self
      */
     public function withScheme($scheme)
     {
@@ -292,7 +288,7 @@ class Uri implements UriInterface
     /**
      * @param string $user
      * @param string|null $password
-     * @return \DevOp\Core\Http\Uri|$this
+     * @return self
      */
     public function withUserInfo($user, $password = null)
     {
