@@ -33,14 +33,16 @@ class Request implements RequestInterface
         }
 
         foreach ($headers AS $header => $value) {
-            $normalize = strtolower($value);
-            $this->headersName[$header] = $normalize;
-            $this->headers[$normalize] = $value;
+            $this->headersName[strtolower($header)] = $header;
+            $this->headers[$header] = !is_array($value) ? [$value] : $value;
         }
         
-        if (!$this->hasHeader('host')) {
+        if (!$this->hasHeader('Host')) {
+            if (null === $uri = $this->uri->getHost()) {
+                $uri = 'localhost';
+            }
             $this->headersName['host'] = 'Host';
-            $this->headers['Host'] = [!empty($this->uri->getHost()) ? $this->uri->getHost() : 'localhost'];
+            $this->headers['Host'] = [$uri];
         }
 
         $this->protocolVersion = $protocolVersion;
