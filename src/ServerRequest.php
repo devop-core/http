@@ -138,7 +138,7 @@ class ServerRequest implements ServerRequestInterface
     }
 
     /**
-     * @param mixed $data
+     * @param array $data
      * @return \DevOp\Core\Http\ServerRequest
      */
     public function withParsedBody($data)

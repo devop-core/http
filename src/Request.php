@@ -22,7 +22,7 @@ class Request implements RequestInterface
     public function __construct($method, UriInterface $uri, array $headers = [], $body = 'php://temp', $protocolVersion = '1.1')
     {
         $this->method = $method;
-        $this->uri = new Uri($uri);
+        $this->uri = $uri;
 
         if ($body instanceof StreamInterface) {
             $this->body = $body;
@@ -38,7 +38,7 @@ class Request implements RequestInterface
         }
         
         if (!$this->hasHeader('Host')) {
-            if (null === $uri = $this->uri->getHost()) {
+            if (!$uri = $this->uri->getHost()) {
                 $uri = 'localhost';
             }
             $this->headersName['host'] = 'Host';
