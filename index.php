@@ -8,5 +8,4 @@ include_once './vendor/autoload.php';
 
 $uri = (new \DevOp\Core\Http\Factory\UriFactory())->createUri('');
 $request = (new \DevOp\Core\Http\Factory\RequestFactory())->createRequest('GET', $uri);
-
 var_dump($request);

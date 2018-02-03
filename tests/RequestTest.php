@@ -17,7 +17,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
     public function testGetBody()
     {
-        $this->assertNull($this->request->getBody());
+        $this->isInstanceOf('\Psr\Http\Message\StreamInterface');
     }
 
     public function testGetMethod()

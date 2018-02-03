@@ -19,19 +19,19 @@ class Request implements RequestInterface
      * @param string|resource|StreamInterface $body
      * @param string $protocolVersion
      */
-    public function __construct($method, UriInterface $uri, array $headers = [], StreamInterface $body = null, $protocolVersion = '1.1')
+    public function __construct($method, UriInterface $uri, array $headers = [], $body = 'php://temp', $protocolVersion = '1.1')
     {
         $this->method = $method;
         $this->uri = new Uri($uri);
-        
+
         if ($body instanceof StreamInterface) {
             $this->body = $body;
         } else if (is_resource($body)) {
-            $this->body = (new Factory\StreamFactory())->createStreamFromFile($body, "r+");
+            $this->body = (new Factory\StreamFactory())->createStreamFromResource($body, "r+");
         } else if (is_string($body)) {
-            $this->body = (new Factory\StreamFactory())->createStream($body);
+            $this->body = (new Factory\StreamFactory())->createStreamFromFile($body);
         }
-        
+
         $this->headers = $headers;
         $this->protocolVersion = $protocolVersion;
     }
