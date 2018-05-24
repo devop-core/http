@@ -1,4 +1,10 @@
-# DevOp Http Message
+# Dependency injection library
+
+## Description
+
+> This library is just proof of concept. > We do **NOT** recommended the use of production environment.
+
+Provide PSR-7 implementation
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
@@ -7,14 +13,12 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-PSR7, PSR17 implementation
-
 ## Install
 
-Via Composer
+Package is available on [Packagist](link-packagist), you can install it using [Composer](http://getcomposer.org).
 
 ``` bash
-$ composer require devop-core/http
+composer require devop-core/http
 ```
 
 ## Change log
