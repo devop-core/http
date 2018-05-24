@@ -14,7 +14,7 @@ class StreamFactory implements StreamFactoryInterface
      */
     public function createStream($content = '')
     {
-        $resource = fopen("php://memory", "w+b");
+        $resource = fopen("php://temp", "w+b");
         
         if (!is_resource($resource)) {
             throw new \InvalidArgumentException('Error while creating PHP stream');

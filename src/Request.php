@@ -16,22 +16,15 @@ class Request implements RequestInterface
      * @param string $method
      * @param UriInterface $uri
      * @param array $headers
-     * @param string|resource|StreamInterface $body
+     * @param StreamInterface $body
      * @param string $protocolVersion
      */
-    public function __construct($method, UriInterface $uri, array $headers = [], $body = 'php://temp', $protocolVersion = '1.1')
+    public function __construct($method, UriInterface $uri, array $headers = [], $body, $protocolVersion = '1.1')
     {
         $this->method = $method;
         $this->uri = $uri;
-
-        if ($body instanceof StreamInterface) {
-            $this->body = $body;
-        } else if (is_resource($body)) {
-            $this->body = (new Factory\StreamFactory())->createStreamFromResource($body);
-        } else {
-            $this->body = (new Factory\StreamFactory())->createStreamFromFile($body, "wb+");
-        }
-
+        $this->body = $body;
+        
         foreach ($headers AS $header => $value) {
             $this->headersName[strtolower($header)] = $header;
             $this->headers[$header] = !is_array($value) ? [$value] : $value;

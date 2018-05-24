@@ -1,10 +1,10 @@
-# HTTP PSR7 library
+# HTTP library
 
 ## Description
 
 > This library is just proof of concept. > We do **NOT** recommended the use of production environment.
 
-Provide PSR-7 implementation
+Provide Message & Factory implementation
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)

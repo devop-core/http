@@ -13,12 +13,12 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
      * @param UriInterface $uri
      * @return ServerRequest
      */
-    public function createServerRequest($method, UriInterface $uri = null)
+    public function createServerRequest($method, $uri)
     {
         if (!$uri instanceof UriInterface) {
             $uri = new Uri($uri);
         }
-
+        
         return new ServerRequest($method, $uri);
     }
 
