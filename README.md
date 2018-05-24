@@ -1,4 +1,4 @@
-# Dependency injection library
+# HTTP PSR7 library
 
 ## Description
 
