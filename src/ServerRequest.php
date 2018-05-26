@@ -7,8 +7,6 @@ use Psr\Http\Message\ServerRequestInterface;
 class ServerRequest extends Request implements ServerRequestInterface
 {
 
-    use MessageTrait;
-
     /**
      * @var array
      */
