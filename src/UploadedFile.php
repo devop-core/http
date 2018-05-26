@@ -29,7 +29,7 @@ class UploadedFile implements UploadedFileInterface
     private $size;
 
     /**
-     * @var string|resource
+     * @var null|string
      */
     private $file;
 
@@ -44,23 +44,24 @@ class UploadedFile implements UploadedFileInterface
     private $moved = false;
 
     /**
-     * @param mixed $stream
+     * @param mixed $streamOrFile
      * @param int $size
      * @param int $error
      * @param string|null $clientFilename
      * @param string|null $clientMediaType
      * @throws \RuntimeException
      */
-    public function __construct($stream, $size = 0, $error = UPLOAD_ERR_OK, $clientFilename = null, $clientMediaType = null)
+    public function __construct($streamOrFile, $size, $error = UPLOAD_ERR_OK, $clientFilename = null, $clientMediaType = null)
     {
-        if ($stream instanceof StreamInterface) {
-            $this->stream = $stream;
-        } else if (is_resource($stream)) {
-            $this->stream = new Stream($stream);
-        } else if (is_string($stream)) {
-            $this->file = $stream;
+
+        if (is_string($streamOrFile)) {
+            $this->file = $streamOrFile;
+        } elseif (is_resource($streamOrFile)) {
+            $this->stream = new Stream($streamOrFile);
+        } elseif ($streamOrFile instanceof StreamInterface) {
+            $this->stream = $streamOrFile;
         } else {
-            throw new \RuntimeException('Invalid uploaded file.');
+            throw new \RuntimeException('Invalid stream or file provided for UploadedFile');
         }
 
         $this->size = $size;
@@ -117,6 +118,9 @@ class UploadedFile implements UploadedFileInterface
      */
     public function getSize()
     {
+        if (null === $this->size) {
+            $this->size = $this->getStream()->getSize();
+        }
         return $this->size;
     }
 
@@ -125,7 +129,11 @@ class UploadedFile implements UploadedFileInterface
      */
     public function getStream()
     {
-        return $this->stream;
+        if ($this->stream instanceof StreamInterface) {
+            return $this->stream;
+        }
+        
+        return (new StreamFactory())->createStreamFromFile($this->file, 'r+');
     }
 
     /**

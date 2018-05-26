@@ -99,9 +99,9 @@ class Stream implements StreamInterface
             throw new \RuntimeException('Unable to read stream');
         }
 
-        rewind($this->stream);
-        
-        return (string) stream_get_contents($this->stream);
+        $this->rewind();
+
+        return stream_get_contents($this->stream);
     }
 
     /**

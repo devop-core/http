@@ -5,11 +5,10 @@ use Psr\Http\Message\UriInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class ServerRequest implements ServerRequestInterface
+class ServerRequest extends Request implements ServerRequestInterface
 {
 
-    use Traits\MessageTrait;
-    use Traits\RequestTrait;
+    use MessageTrait;
 
     /**
      * @var array
@@ -42,15 +41,52 @@ class ServerRequest implements ServerRequestInterface
     private $uploadedFiles = [];
 
     /**
-     * @param string $method
+     * @param type $method
      * @param UriInterface $uri
      * @param array $headers
-     * @param string|resource|StreamInterface $body
-     * @param string $version
+     * @param type $body
+     * @param type $version
+     * @param array $serverParams
      */
-    public function __construct($method, UriInterface $uri, array $headers = [], $body = 'php://temp', $version = '1.1')
+    public function __construct($method, UriInterface $uri, array $headers = [], $body = 'php://temp', $version = '1.1', array $serverParams = [])
     {
-        return new Request($method, $uri, $headers, $body, $version);
+        $this->serverParams = $serverParams;
+        parent::__construct($method, $uri, $headers, $body, $version);
+    }
+
+    public static function getUriFromGlobals(array $server = [])
+    {
+        $uri = new Uri('');
+        $uri = $uri->withScheme(!empty($server['HTTPS']) && $server['HTTPS'] !== 'off' ? 'https' : 'http');
+        $hasPort = false;
+        if (isset($server['HTTP_HOST'])) {
+            $hostHeaderParts = explode(':', $server['HTTP_HOST']);
+            $uri = $uri->withHost($hostHeaderParts[0]);
+            if (isset($hostHeaderParts[1])) {
+                $hasPort = true;
+                $uri = $uri->withPort($hostHeaderParts[1]);
+            }
+        } elseif (isset($server['SERVER_NAME'])) {
+            $uri = $uri->withHost($server['SERVER_NAME']);
+        } elseif (isset($server['SERVER_ADDR'])) {
+            $uri = $uri->withHost($server['SERVER_ADDR']);
+        }
+        if (!$hasPort && isset($server['SERVER_PORT'])) {
+            $uri = $uri->withPort($server['SERVER_PORT']);
+        }
+        $hasQuery = false;
+        if (isset($server['REQUEST_URI'])) {
+            $requestUriParts = explode('?', $server['REQUEST_URI'], 2);
+            $uri = $uri->withPath($requestUriParts[0]);
+            if (isset($requestUriParts[1])) {
+                $hasQuery = true;
+                $uri = $uri->withQuery($requestUriParts[1]);
+            }
+        }
+        if (!$hasQuery && isset($server['QUERY_STRING'])) {
+            $uri = $uri->withQuery($server['QUERY_STRING']);
+        }
+        return $uri;
     }
 
     /**

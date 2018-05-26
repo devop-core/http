@@ -11,8 +11,8 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $uri = (new \DevOp\Core\Http\Factory\UriFactory())->createUri('');
-        $this->request = (new \DevOp\Core\Http\Factory\RequestFactory())->createRequest('GET', $uri);
+        $uri = (new \DevOp\Core\Http\UriFactory())->createUri('');
+        $this->request = (new \DevOp\Core\Http\RequestFactory())->createRequest('GET', $uri);
     }
 
     public function testGetMethod()
@@ -33,7 +33,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     
     public function testWithBody()
     {
-        $stream = (new \DevOp\Core\Http\Factory\StreamFactory())->createStream('test');
+        $stream = (new \DevOp\Core\Http\StreamFactory())->createStream('test');
         $clone = $this->request->withBody($stream);
         $this->assertSame('test', (string) $clone->getBody());
     }

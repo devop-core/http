@@ -1,5 +1,5 @@
 <?php
-namespace DevOp\Core\Http\Factory;
+namespace DevOp\Core\Http;
 
 use DevOp\Core\Http\Uri;
 use Interop\Http\Factory\UriFactoryInterface;

@@ -1,5 +1,5 @@
 <?php
-namespace DevOp\Core\Http\Traits;
+namespace DevOp\Core\Http;
 
 use Psr\Http\Message\StreamInterface;
 

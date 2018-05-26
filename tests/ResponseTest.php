@@ -11,7 +11,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->response = (new \DevOp\Core\Http\Factory\ResponseFactory())->createResponse(200);
+        $this->response = (new \DevOp\Core\Http\ResponseFactory())->createResponse(200);
     }
 
     public function testGetStatusCode()

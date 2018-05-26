@@ -13,7 +13,7 @@ class StreamTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->stream = (new \DevOp\Core\Http\Factory\StreamFactory())->createStream('test');
+        $this->stream = (new \DevOp\Core\Http\StreamFactory())->createStream('test');
     }
 
     public function testStreamIsReadable()

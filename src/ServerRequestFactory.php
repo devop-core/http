@@ -1,5 +1,5 @@
 <?php
-namespace DevOp\Core\Http\Factory;
+namespace DevOp\Core\Http;
 
 use DevOp\Core\Http\ServerRequest;
 use Psr\Http\Message\UriInterface;
@@ -18,7 +18,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         if (!$uri instanceof UriInterface) {
             $uri = new Uri($uri);
         }
-        
+
         return new ServerRequest($method, $uri);
     }
 
@@ -29,7 +29,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
     public function createServerRequestFromArray(array $server)
     {
         $method = $server['REQUEST_METHOD'] ?: 'GET';
-        $uri = (new UriFactory())->createUri('');
+        $uri = ServerRequest::getUriFromGlobals($server);
         $body = (new StreamFactory())->createStreamFromFile('php://temp', 'r+');
 
         return new ServerRequest($method, $uri, $server, $body, '1.1');

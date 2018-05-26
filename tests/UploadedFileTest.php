@@ -11,7 +11,7 @@ class UploadedFileTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $stream = (new \DevOp\Core\Http\Factory\StreamFactory())->createStream('test');
+        $stream = (new \DevOp\Core\Http\StreamFactory())->createStream('test');
         $this->uploadedFile = new \DevOp\Core\Http\UploadedFile($stream, 4, UPLOAD_ERR_OK, 'tempnam', '');
     }
     

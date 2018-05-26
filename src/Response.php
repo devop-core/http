@@ -7,7 +7,7 @@ use Psr\Http\Message\ResponseInterface;
 class Response implements ResponseInterface
 {
 
-    use Traits\MessageTrait;
+    use MessageTrait;
 
     /**
      * @link https://gist.github.com/Stoffo/53e093450aed067a8fa8

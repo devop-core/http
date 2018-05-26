@@ -60,16 +60,21 @@ class Uri implements UriInterface
             return $uri;
         }
 
+        $parseUrl = parse_url($uri);
+        if (!$parseUrl) {
+            throw new \InvalidArgumentException;
+        }
+
         $components = array_merge(array(
             'scheme' => '',
             'host' => '',
-            'port' => '',
-            'user' => '',
-            'pass' => '',
+            'port' => null,
+            'user' => null,
+            'pass' => null,
             'path' => '',
-            'query' => '',
-            'fragment' => ''
-            ), parse_url($uri));
+            'query' => null,
+            'fragment' => null
+            ), $parseUrl);
 
         $this->scheme = $components['scheme'];
         $this->host = $components['host'];
@@ -91,7 +96,7 @@ class Uri implements UriInterface
         }
         return null;
     }
-    
+
     /**
      * @return string
      */
@@ -100,11 +105,13 @@ class Uri implements UriInterface
         $uri = $this->scheme;
 
         if ($this->userInfo !== null) {
-            $uri .= "//{$this->userInfo}";
+            $uri .= "://{$this->userInfo}";
         }
 
+        $uri .= $this->host;
+
         if ($this->port !== null && !in_array($this->port, [self::$schemes['http'], self::$schemes['https']])) {
-            $uri .= ":{$this->port}";
+            $uri .= ":{$this->host}{$this->port}";
         }
 
         $uri .= $this->path;
@@ -243,7 +250,7 @@ class Uri implements UriInterface
         }
 
         $clone = clone $this;
-        $clone->port = $port;
+        $clone->port = (int) $port;
 
         return $clone;
     }

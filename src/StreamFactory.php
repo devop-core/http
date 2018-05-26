@@ -1,5 +1,5 @@
 <?php
-namespace DevOp\Core\Http\Factory;
+namespace DevOp\Core\Http;
 
 use DevOp\Core\Http\Stream;
 use Psr\Http\Message\StreamInterface;
@@ -15,11 +15,11 @@ class StreamFactory implements StreamFactoryInterface
     public function createStream($content = '')
     {
         $resource = fopen("php://temp", "w+b");
-        
+
         if (!is_resource($resource)) {
             throw new \InvalidArgumentException('Error while creating PHP stream');
         }
-        
+
         fwrite($resource, $content);
         rewind($resource);
 
@@ -38,7 +38,7 @@ class StreamFactory implements StreamFactoryInterface
         if (!is_resource($resource)) {
             throw new \InvalidArgumentException('Error while creating PHP stream');
         }
-        
+
         return $this->createStreamFromResource($resource);
     }
 
