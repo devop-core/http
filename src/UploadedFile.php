@@ -34,7 +34,7 @@ class UploadedFile implements UploadedFileInterface
     private $file;
 
     /**
-     * @var StreamInterface
+     * @var null|StreamInterface
      */
     private $stream;
 

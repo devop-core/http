@@ -61,7 +61,7 @@ class Uri implements UriInterface
         }
 
         $parseUrl = parse_url($uri);
-        if (!$parseUrl) {
+        if (empty($parseUrl)) {
             throw new \InvalidArgumentException;
         }
 

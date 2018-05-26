@@ -2,7 +2,6 @@
 namespace DevOp\Core\Http;
 
 use Psr\Http\Message\UriInterface;
-use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class ServerRequest extends Request implements ServerRequestInterface
@@ -41,14 +40,14 @@ class ServerRequest extends Request implements ServerRequestInterface
     private $uploadedFiles = [];
 
     /**
-     * @param type $method
+     * @param string $method
      * @param UriInterface $uri
      * @param array $headers
-     * @param type $body
-     * @param type $version
+     * @param \Psr\Http\Message\StreamInterface|null $body
+     * @param string $version
      * @param array $serverParams
      */
-    public function __construct($method, UriInterface $uri, array $headers = [], $body = 'php://temp', $version = '1.1', array $serverParams = [])
+    public function __construct($method, UriInterface $uri, array $headers = [], $body = null, $version = '1.1', array $serverParams = [])
     {
         $this->serverParams = $serverParams;
         parent::__construct($method, $uri, $headers, $body, $version);
@@ -64,7 +63,7 @@ class ServerRequest extends Request implements ServerRequestInterface
             $uri = $uri->withHost($hostHeaderParts[0]);
             if (isset($hostHeaderParts[1])) {
                 $hasPort = true;
-                $uri = $uri->withPort($hostHeaderParts[1]);
+                $uri = $uri->withPort((int) $hostHeaderParts[1]);
             }
         } elseif (isset($server['SERVER_NAME'])) {
             $uri = $uri->withHost($server['SERVER_NAME']);

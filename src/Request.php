@@ -30,7 +30,7 @@ class Request implements RequestInterface
      * @param string $method
      * @param UriInterface $uri
      * @param array $headers
-     * @param StreamInterface $body
+     * @param StreamInterface|null $body
      * @param string $protocolVersion
      */
     public function __construct($method, UriInterface $uri, array $headers = [], $body = null, $protocolVersion = '1.1')
