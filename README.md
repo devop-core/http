@@ -21,6 +21,18 @@ Package is available on [Packagist](link-packagist), you can install it using [C
 composer require devop-core/http
 ```
 
+## Usage
+
+``` php
+<?php
+use DevOp\Core\Http\ServerRequestFactory;
+
+require_once './vendor/autoload.php';
+
+$reqest = (new ServerRequestFactory())->createServerRequestFromArray($_SERVER);
+var_dump($reqest);
+```
+
 ## Change log
 
 Please see [CHANGELOG](.github/CHANGELOG.md) for more information on what has changed recently.
