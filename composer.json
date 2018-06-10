@@ -2,14 +2,14 @@
     "name": "devop-core/http",
     "description": "Http Message Service",
     "keywords": ["php", "http", "request", "psr7", "psr17"],
-    "homepage": "https://devop-studio.com",
+    "homepage": "https://www.devop.studio",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
             "name": "DevOp Studio",
-            "email": "core@devop-studio.com",
-            "homepage": "https://devop-studio.com"
+            "email": "core@devop.studio",
+            "homepage": "https://www.devop.studio"
         },
         {
             "name": "Zlatin Hristov",
