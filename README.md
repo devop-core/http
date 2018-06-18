@@ -2,7 +2,8 @@
 
 ## Description
 
-> This library is just proof of concept. > We do **NOT** recommended the use of production environment.
+> This library is just proof of concept. 
+> We do **NOT** recommended the use of production environment.
 
 Provide Message & Factory implementation
 
