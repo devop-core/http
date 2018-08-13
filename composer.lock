@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c75e4dac307882c14257ed20347abedb",
+    "content-hash": "23917a11ec93bd4c05355217acf577d6",
     "packages": [
         {
             "name": "http-interop/http-factory",
@@ -164,6 +164,52 @@
                 "instantiate"
             ],
             "time": "2015-06-14T21:17:01+00:00"
+        },
+        {
+            "name": "http-interop/http-factory-tests",
+            "version": "0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/http-interop/http-factory-tests.git",
+                "reference": "98e73d9b52654e2b6051481db0bce02d87b3763b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/http-interop/http-factory-tests/zipball/98e73d9b52654e2b6051481db0bce02d87b3763b",
+                "reference": "98e73d9b52654e2b6051481db0bce02d87b3763b",
+                "shasum": ""
+            },
+            "require": {
+                "http-interop/http-factory": "^0.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Interop\\Http\\Factory\\": "test/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Unit tests for HTTP factories",
+            "keywords": [
+                "factory",
+                "http",
+                "psr-17",
+                "psr-7",
+                "test"
+            ],
+            "time": "2017-03-24T16:27:26+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
