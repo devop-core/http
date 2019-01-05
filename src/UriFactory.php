@@ -2,7 +2,7 @@
 namespace DevOp\Core\Http;
 
 use DevOp\Core\Http\Uri;
-use Interop\Http\Factory\UriFactoryInterface;
+use Psr\Http\Message\UriFactoryInterface;
 
 class UriFactory implements UriFactoryInterface
 {

@@ -3,7 +3,7 @@ namespace DevOp\Core\Http;
 
 use DevOp\Core\Http\ServerRequest;
 use Psr\Http\Message\UriInterface;
-use Interop\Http\Factory\ServerRequestFactoryInterface;
+use Psr\Http\Message\ServerRequestFactoryInterface;
 
 class ServerRequestFactory implements ServerRequestFactoryInterface
 {

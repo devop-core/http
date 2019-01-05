@@ -2,7 +2,7 @@
 namespace DevOp\Core\Http;
 
 use DevOp\Core\Http\UploadedFile;
-use Interop\Http\Factory\UploadedFileFactoryInterface;
+use Psr\Http\Message\UploadedFileFactoryInterface;
 
 class UploadedFileFactory implements UploadedFileFactoryInterface
 {

@@ -3,7 +3,7 @@ namespace DevOp\Core\Http;
 
 use DevOp\Core\Http\Stream;
 use Psr\Http\Message\StreamInterface;
-use Interop\Http\Factory\StreamFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
 class StreamFactory implements StreamFactoryInterface
 {

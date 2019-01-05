@@ -2,7 +2,7 @@
 namespace DevOp\Core\Http;
 
 use DevOp\Core\Http\Request;
-use Interop\Http\Factory\RequestFactoryInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 
 class RequestFactory implements RequestFactoryInterface
 {

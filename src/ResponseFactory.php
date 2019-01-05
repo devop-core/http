@@ -3,7 +3,7 @@ namespace DevOp\Core\Http;
 
 use DevOp\Core\Http\Response;
 use DevOp\Core\Http\StreamFactory;
-use Interop\Http\Factory\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 
 class ResponseFactory implements ResponseFactoryInterface
 {
