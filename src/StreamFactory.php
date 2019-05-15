@@ -12,7 +12,7 @@ class StreamFactory implements StreamFactoryInterface
      * @param string $content
      * @return StreamInterface
      */
-    public function createStream($content = '')
+    public function createStream(string $content = ''): StreamInterface
     {
         $resource = fopen("php://temp", "w+b");
 
@@ -31,7 +31,7 @@ class StreamFactory implements StreamFactoryInterface
      * @param string $mode
      * @return StreamInterface
      */
-    public function createStreamFromFile($filename, $mode = 'r')
+    public function createStreamFromFile(string $filename, string $mode = 'r'): StreamInterface
     {
         $resource = fopen($filename, $mode);
 
@@ -46,7 +46,7 @@ class StreamFactory implements StreamFactoryInterface
      * @param resource $resource
      * @return StreamInterface
      */
-    public function createStreamFromResource($resource)
+    public function createStreamFromResource($resource): StreamInterface
     {
         return new Stream($resource);
     }

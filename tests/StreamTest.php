@@ -1,9 +1,9 @@
 <?php
 namespace DevOp\Core\Http\Test;
 
-use DevOp\Core\Http\Stream;
+use PHPUnit\Framework\TestCase;
 
-class StreamTest extends \PHPUnit_Framework_TestCase
+class StreamTest extends TestCase
 {
 
     /**

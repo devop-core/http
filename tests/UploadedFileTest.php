@@ -1,7 +1,9 @@
 <?php
 namespace DevOp\Core\Http\Test;
 
-class UploadedFileTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class UploadedFileTest extends TestCase
 {
 
     /**
@@ -14,13 +16,13 @@ class UploadedFileTest extends \PHPUnit_Framework_TestCase
         $stream = (new \DevOp\Core\Http\StreamFactory())->createStream('test');
         $this->uploadedFile = new \DevOp\Core\Http\UploadedFile($stream, 4, UPLOAD_ERR_OK, 'tempnam', '');
     }
-    
+
     public function testConstructThrowException()
     {
-        $this->setExpectedException('\RuntimeException');
+        $this->expectException('\RuntimeException');
         new \DevOp\Core\Http\UploadedFile(null, null);
     }
-    
+
     public function testGetUploadedFileSize()
     {
         $this->assertEquals(4, $this->uploadedFile->getSize());

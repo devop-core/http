@@ -8,12 +8,13 @@ class RequestFactory implements RequestFactoryInterface
 {
 
     /**
+     * 
      * @param string $method
-     * @param string|\Psr\Http\Message\UriInterface $uri
+     * @param \Psr\Http\Message\UriInterface|string $uri
      * @return Request
      * @throws \InvalidArgumentException
      */
-    public function createRequest($method, $uri)
+    public function createRequest(string $method, $uri): \Psr\Http\Message\RequestInterface
     {
 
         if (is_string($uri)) {

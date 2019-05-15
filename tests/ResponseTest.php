@@ -1,7 +1,9 @@
 <?php
 namespace DevOp\Core\Test\Http;
 
-class ResponseTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class ResponseTest extends TestCase
 {
 
     /**
