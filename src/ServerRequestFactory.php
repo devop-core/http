@@ -3,6 +3,7 @@ namespace DevOp\Core\Http;
 
 use DevOp\Core\Http\ServerRequest;
 use Psr\Http\Message\UriInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 
 class ServerRequestFactory implements ServerRequestFactoryInterface
@@ -13,13 +14,13 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
      * @param UriInterface $uri
      * @return ServerRequest
      */
-    public function createServerRequest($method, $uri)
+    public function createServerRequest(string $method, $uri, array $serverParams = []): ServerRequestInterface
     {
         if (!$uri instanceof UriInterface) {
             $uri = new Uri($uri);
         }
 
-        return new ServerRequest($method, $uri);
+        return new ServerRequest($method, $uri, $serverParams);
     }
 
     /**
